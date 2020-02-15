@@ -1,6 +1,6 @@
 # Microsoft Open Source Engineering - GitHub Hackathon
 
-## To run:
+## To install:
 ```
 npm install
 ```

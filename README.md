@@ -19,7 +19,7 @@ npm run dev
 ```
 npm run start
 ```
- - Combiles and builds project into ./dist directory and runs once.
+ - Compiles and builds project into ./dist directory and runs once.
 
 ---
 

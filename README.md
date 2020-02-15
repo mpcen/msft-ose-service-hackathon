@@ -47,4 +47,4 @@ const MY_SECRET = process.env.MY_SECRET;
 ---
 
 Need to ignore some files/directories so they don't get checked in?
-- Add them to the .gitignore directory
+- Add them to .gitignore

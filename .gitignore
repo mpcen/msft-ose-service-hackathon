@@ -1,4 +1,8 @@
+.idea/
+.vscode/
+node_modules/
+build/
+tmp/
+temp/
 .env
-.vscode
-dist
-node_modules
+dist/*

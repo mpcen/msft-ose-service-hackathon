@@ -1,45 +1,79 @@
 # Microsoft Open Source Engineering - GitHub Hackathon
 
-## To install:
+## Pre-Reqs:
+
+-   [MySQL Server v8.0.19 X64 & MySQL Workbench v8.x](https://dev.mysql.com/downloads/file/?id=492814)
+-   [Node v12.16.0](https://nodejs.org/dist/v12.16.0/node-v12.16.0-x64.msi)
+
+## 1. Getting your MySQL instance ready:
+
+Within MySQL Workbench, create a new MySQL database
+
+```
+CREATE DATABASE hackathondb;
+```
+
+---
+
+## 2. Create a .env file in project root
+
+Populate it with the following environment variables and credentials. For example:
+
+```
+DB_HOST=localhost
+DB_USERNAME=root
+DB_PASSWORD=secret
+DB_NAME=hackathondb
+```
+
+## 3. Install project and dependencies:
+
 ```
 npm install
 ```
 
 ---
 
-## Commands you should know:
+## 4. Run project in development mode:
 
 ```
 npm run dev
 ```
-- Runs project in development mode with hot-reloading (project auto-reloads on every save)
 
 ---
 
-```
-npm run start
-```
- - Compiles and builds project into ./dist directory and runs once.
+# Good resources:
 
----
+-   [Express Routes & Controllers](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/routes)
+-   [TypeORM API Docs](https://typeorm.io/#/)
+-   [TypeORM Code Samples](https://github.com/typeorm/typeorm/tree/master/sample)
+-   [Node Best Practices](https://github.com/goldbergyoni/nodebestpractices#1-project-structure-practices)
 
- ## So you need some UUID's?
- ```
-    // import uuidv4 library
-    import { uuid } from 'uuidv4';
-    const myId = uuid();
- ```
-  - See more commands at [npm-uuidv4](https://www.npmjs.com/package/uuidv4)
+# Some random how-to's and tools
+
+## So you need some UUID's?
+
+```
+   // import uuidv4 library
+   import { uuid } from 'uuidv4';
+   const myId = uuid();
+```
+
+-   See more commands at [npm-uuidv4](https://www.npmjs.com/package/uuidv4)
 
 ---
 
 ## So you need some environment variables for some uber-secret stuffs?
+
 1. Create a **.env** at the root of the project
 2. define the environment variable as such:
+
 ```
 MY_SECRET=1337_s3k|237
 ```
+
 3. Reference the secret in code as such:
+
 ```
 const MY_SECRET = process.env.MY_SECRET;
 ```
@@ -47,4 +81,5 @@ const MY_SECRET = process.env.MY_SECRET;
 ---
 
 Need to ignore some files/directories so they don't get checked in?
-- Add them to .gitignore
+
+-   Add them to .gitignore

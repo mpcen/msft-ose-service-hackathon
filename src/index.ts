@@ -1,17 +1,34 @@
 require('dotenv').config();
 
+import 'reflect-metadata';
 import express, { Request, Response } from 'express';
-import cors from 'cors';
 import bodyParser from 'body-parser';
+import cors from 'cors';
+import { createConnection } from 'typeorm';
 
-const app = express();
+import { ormConfig } from '../ormConfig';
+import { AppRoutes } from './routes';
+
 const PORT = process.env.PORT || 5000;
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+createConnection(ormConfig)
+    .then(async connection => {
+        // create and setup express app
+        const app = express();
 
-app.get('/', (req: Request, res: Response) => {
-    res.send('MSFT OSE Hackathon Server')
-})
+        app.use(bodyParser.json());
+        app.use(cors());
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+        // register all application routes
+        AppRoutes.forEach(route => {
+            app[route.method](route.path, (req: Request, res: Response, next: Function) => {
+                route
+                    .action(req, res)
+                    .then(() => next)
+                    .catch(err => next(err));
+            });
+        });
+
+        app.listen(PORT, () => console.log(`Express server running on port ${PORT}`));
+    })
+    .catch(error => console.log('TypeORM connection error', error));

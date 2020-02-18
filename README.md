@@ -14,6 +14,7 @@ Within MySQL Workbench, create a new MySQL database
 
 ```
 CREATE DATABASE hackathondb;
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'YOUR PASSWORD
 ```
 
 ---

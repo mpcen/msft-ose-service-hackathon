@@ -93,3 +93,46 @@ Need to ignore some files/directories so they don't get checked in?
 
 1. Fix MySQL connection failure because `Client does not support authentication protocol requested by server; consider upgrading MySQL client`?
    [Here](https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server) is a good solution.
+
+## Sample requests:
+
+GET localhost:5000/snapshots/12345?commit=usgf873ewfewr&release=qqq&workflow=mmmmm&branch=master&run=98765
+
+POST localhost:5000/snapshots
+
+```
+{
+        "locations": [
+            {
+                "path": "path/to/metadata/file/package.json",
+                "components": [
+                    {
+                        "coordinates": {
+                            "type": "npm",
+                            "name": "express",
+                            "version": "4.0.0"
+                        },
+                        "usage": {
+                            "devDependency": false
+                        },
+                        "children": [{
+                        	"coordinates": {
+                        		"type": "npm",
+                                "name": "ajv",
+                                "version": "6.11.0"
+                        	}
+                        }],
+                        "directDependency": true
+                    }
+                ],
+                "metadata": {
+                    "commit": "jgljlgjrgjortgrtop",
+                    "branch": "master",
+                    "release": "",
+                    "workflow": "123",
+                    "run": "567"
+                }
+            }
+        ]
+    }
+```

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { getManager } from 'typeorm';
 
-import { Component } from '../../entity/Component';
+import { Component } from '../../database/entity/Component';
 
 /**
  * Stores a component into database

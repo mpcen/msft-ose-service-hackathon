@@ -28,6 +28,7 @@ DB_HOST=localhost
 DB_USERNAME=root
 DB_PASSWORD=secret
 DB_NAME=hackathondb
+DB_PORT=3306
 ```
 
 ## 3. Install project and dependencies:

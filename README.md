@@ -3,9 +3,10 @@
 ## Pre-Reqs:
 
 -   [MySQL Server v8.0.19 X64 & MySQL Workbench v8.x]
-      - For Windows: (https://dev.mysql.com/downloads/file/?id=492814)
-      - For MacOS: (https://dev.mysql.com/downloads/file/?id=492745)
+    -   For Windows: (https://dev.mysql.com/downloads/file/?id=492814)
+    -   For MacOS: (https://dev.mysql.com/downloads/file/?id=492745)
 -   [Node v12.16.0](https://nodejs.org/dist/v12.16.0/node-v12.16.0-x64.msi)
+-   VSCode w/ Prettier and ESLint extensions installed
 
 ## 1. Getting your MySQL instance ready:
 
@@ -89,6 +90,6 @@ Need to ignore some files/directories so they don't get checked in?
 ---
 
 ## Q&A
+
 1. Fix MySQL connection failure because `Client does not support authentication protocol requested by server; consider upgrading MySQL client`?
-      
-      [Here](https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server) is a good solution.
+    [Here](https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server) is a good solution.

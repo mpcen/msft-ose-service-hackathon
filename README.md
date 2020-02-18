@@ -89,5 +89,6 @@ Need to ignore some files/directories so they don't get checked in?
 ---
 
 ## Q&A
-1. Connect MySQL failed because `Client does not support authentication protocol requested by server; consider upgrading MySQL client`
-[Here](https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server) is a good solution.
+1. Fix MySQL connection failure because `Client does not support authentication protocol requested by server; consider upgrading MySQL client`?
+      
+      [Here](https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server) is a good solution.

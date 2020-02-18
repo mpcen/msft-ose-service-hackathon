@@ -117,7 +117,7 @@ POST localhost:5000/snapshots
                         "usage": {
                             "devDependency": false
                         },
-                        "children": [{
+                        "dependencies": [{
                         	"coordinates": {
                         		"type": "npm",
                                 "name": "ajv",

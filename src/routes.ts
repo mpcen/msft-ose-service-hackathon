@@ -22,7 +22,7 @@ export const AppRoutes: Route[] = [
         action: postComponent
     },
     {
-        path: '/snapshots',
+        path: '/snapshots/:id',
         method: 'get',
         action: getSnapshots
     },

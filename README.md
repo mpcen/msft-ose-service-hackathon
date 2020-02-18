@@ -2,7 +2,9 @@
 
 ## Pre-Reqs:
 
--   [MySQL Server v8.0.19 X64 & MySQL Workbench v8.x](https://dev.mysql.com/downloads/file/?id=492814)
+-   [MySQL Server v8.0.19 X64 & MySQL Workbench v8.x]
+      - For windows: (https://dev.mysql.com/downloads/file/?id=492814)
+      - For Mac: (https://dev.mysql.com/downloads/file/?id=492745)
 -   [Node v12.16.0](https://nodejs.org/dist/v12.16.0/node-v12.16.0-x64.msi)
 
 ## 1. Getting your MySQL instance ready:

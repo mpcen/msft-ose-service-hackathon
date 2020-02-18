@@ -2,7 +2,13 @@ import { Request, Response } from 'express';
 
 export const getSnapshots = async (req: Request, res: Response) => {
     console.log(`GET /snapshots/${req.params.id} id:`, 'req.query.params:', req.query);
-    // TODO: fetch from DB and blob storage
+    
+    // GET FINAL SNAPSHOT INFORMATION BY SNAPSHOT ID
+    const snapshotId = req.params.id;
+    // INTEGRATION HERE
+    //const snapshot = await getSnapshotById(snapshotId);
+
+    // RETURN BACK
     const responseBody = {
         id: '12345',
         createdAt: new Date(),
@@ -35,6 +41,6 @@ export const getSnapshots = async (req: Request, res: Response) => {
             }
         ]
     };
-    console.log(`GET /snapshots/${req.params.id} response:`, 'req.query.params:', JSON.stringify(responseBody, null, 2));
+    
     res.json(responseBody);
 };

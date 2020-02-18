@@ -104,7 +104,7 @@ POST localhost:5000/snapshots
 
 ```
 {
-        "locations": [
+    "locations": [
             {
                 "path": "path/to/metadata/file/package.json",
                 "components": [

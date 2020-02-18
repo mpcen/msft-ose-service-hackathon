@@ -1,9 +1,45 @@
 import { Request, Response } from 'express';
 
 export const postSnapshots = async (req: Request, res: Response) => {
-    console.log('POST /snapshots request:', JSON.stringify(req.body, null, 2));
-    // TODO: persist to blob storage and DB
-    const responseBody = { id: '12345', createdAt: new Date(), ...req.body,  };
-    console.log('POST /snapshots response:', JSON.stringify(responseBody, null, 2));
-    res.json(responseBody);
+    const snapshotInformation = req.body; // req.body will be the same format as fakeBlob
+    const fakeBlobComingFromPostBody = {
+        locations: [
+                {
+                    "path": "path/to/metadata/file/package.json",
+                    "components": [
+                        {
+                            "coordinates": {
+                                "type": "npm",
+                                "name": "express",
+                                "version": "4.0.0"
+                            },
+                            "usage": {
+                                "devDependency": false
+                            },
+                            "children": [{
+                                "coordinates": {
+                                    "type": "npm",
+                                    "name": "ajv",
+                                    "version": "6.11.0"
+                                }
+                            }],
+                            "directDependency": true
+                        }
+                    ],
+                    "metadata": {
+                        "commit": "jgljlgjrgjortgrtop",
+                        "branch": "master",
+                        "release": "",
+                        "workflow": "123",
+                        "run": "567"
+                    },
+                }
+            ]
+        };
+
+    // INTEGRATION GOES HERE
+    // const snapshotBlobResponse = await snapshotService.store(snapshotInformation);
+
+    // res.json(fakeBlobComingFromPostBody PLUS createdAt + id)
+    res.json(fakeBlobComingFromPostBody);
 };

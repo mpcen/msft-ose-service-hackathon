@@ -19,7 +19,7 @@ export const getSnapshots = async (req: Request, res: Response) => {
                         usage: {
                             devDependency: false
                         },
-                        children: [
+                        dependencies: [
                             {
                                 coordinates: {
                                     type: 'npm',

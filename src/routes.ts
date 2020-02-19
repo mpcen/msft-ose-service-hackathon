@@ -2,6 +2,7 @@ import { getAllComponents } from './controller/Component/GetAllComponents';
 import { postComponent } from './controller/Component/PostComponent';
 import { getSnapshots } from './controller/Snapshot/GetSnapshots';
 import { postSnapshots } from './controller/Snapshot/PostSnapshots';
+import { getAlerts } from './controller/Alert/GetAlerts';
 import { Response, Request } from 'express';
 
 type Route = {
@@ -30,5 +31,10 @@ export const AppRoutes: Route[] = [
         path: '/:org/:repo/snapshots',
         method: 'post',
         action: postSnapshots
-    }
+    },
+    {
+        path: '/:org/:repo/alerts',
+        method: 'get',
+        action: getAlerts
+    },
 ];

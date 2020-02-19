@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class ComponentSnapshot {
+export class SnapshotMetadata {
     @PrimaryColumn({
         length: 39,
     })
@@ -18,4 +18,3 @@ export class ComponentSnapshot {
     @PrimaryColumn('varchar')
     metadata: string;
 }
-

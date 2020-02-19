@@ -11,7 +11,7 @@ export const ormConfig: MysqlConnectionOptions = {
     username: DB_USERNAME,
     password: DB_PASSWORD,
     database: DB_NAME,
-    entities: [__dirname + '/src/database/entity/**/*.js'],
+    entities: [__dirname + '/src/database/entity/**/*.ts'],
     synchronize: true, // dont use in prod
     logging: false // this is personal preference
 };

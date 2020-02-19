@@ -29,7 +29,7 @@ DB_USERNAME=root
 DB_PASSWORD=secret
 DB_NAME=hackathondb
 DB_PORT=3306
-Blob_SERVICE_CONNECTION_STRING={Windows user could create a connection string}
+AZURE_STORAGE_CONNECTION_STRING={Windows user could create a connection string}
 ```
 
 ## 3. Install project and dependencies:

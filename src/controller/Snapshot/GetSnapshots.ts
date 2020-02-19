@@ -7,5 +7,5 @@ export const getSnapshots = async (req: Request, res: Response) => {
     const { org, repo, id } = req.params;
     const snapshot = await snapshotService.getById(org, repo, parseInt(id));
     console.log(`GET /${req.params.org}/${req.params.repo}/snapshots/${req.params.id} response:`, 'req.query.params:', JSON.stringify(req.body, null, 2));
-    res.json(snapshot);
+    res.status(snapshot ? 200 : 404).json(snapshot);
 };

@@ -31,6 +31,9 @@ export default class SnapshotService {
 
   public async getById(org: string, repo: string, snapshotId: number) {
     const metadata = await this.getMetadataById(org, repo, snapshotId);
+    if (!metadata) {
+      return;
+    }
     const blockBlobClient = this.containerClient.getBlockBlobClient(`${metadata.blobId}.json`);
     const downloadBlockBlobResponse = await blockBlobClient.download(0);
     return JSON.parse(await this.streamToString(downloadBlockBlobResponse.readableStreamBody));
@@ -99,7 +102,7 @@ export async function getSnapshotService() {
     return snapshotService;
   }
   snapshotService = new SnapshotService({
-    connectionString: process.env.Blob_SERVICE_CONNECTION_STRING,
+    connectionString: process.env.AZURE_STORAGE_CONNECTION_STRING,
   });
   await snapshotService.init();
   return snapshotService;

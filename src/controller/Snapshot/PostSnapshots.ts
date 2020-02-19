@@ -1,9 +1,18 @@
 import { Request, Response } from 'express';
+import { getSnapshotService } from '../../business/SnapshotService';
+
 
 export const postSnapshots = async (req: Request, res: Response) => {
     console.log(`POST /${req.params.org}/${req.params.repo}/snapshots request:`, JSON.stringify(req.body, null, 2));
-    // TODO: persist to blob storage and DB
-    const responseBody = { id: '12345', createdAt: new Date(), org: req.params.org, repo: req.params.repo, ...req.body,  };
-    console.log(`POST /${req.params.org}/${req.params.repo}/snapshots response:`, JSON.stringify(responseBody, null, 2));
-    res.json(responseBody);
+    const snapshotService = await getSnapshotService();
+    await snapshotService.saveSnapshot({
+        ...req.body,
+        metadata: {
+            snapshotId: req.body.id,
+            ...req.params,
+            ...req.body.metadata,
+        }
+    });
+    console.log(`POST /${req.params.org}/${req.params.repo}/snapshots response:`, JSON.stringify(req.body, null, 2));
+    res.json(req.body);
 };

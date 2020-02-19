@@ -11,3 +11,4 @@ export class Component {
     @Column('tinyint')
     type: number;
 }
+

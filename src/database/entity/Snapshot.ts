@@ -2,41 +2,38 @@ import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn, Generated } from
 
 @Entity()
 export class Snapshot {
-    
     @PrimaryColumn({
-        length:39
+        length: 39,
     })
     org: string;
 
     @PrimaryColumn({
-        length:100
+        length: 100,
     })
     repo: string;
 
     @PrimaryColumn({
-        length:40
+        length: 40,
     })
-    key:  string;
+    key: string;
 
     @PrimaryColumn({
-        length:40
+        length: 40,
     })
-    value:  string;
+    value: string;
 
     @Column({
-        generated:true,
-        unique:true,
-        primary:true
-    }) 
-    snapshotId: number; 
+        generated: true,
+        unique: true,
+        primary: true,
+    })
+    snapshotId: number;
 
     @Column('datetime')
-    dateModified:  Date;
+    dateModified: Date;
 
     @Column({
-        length:40
+        length: 40,
     })
-    blobId: string
+    blobId: string;
 }
-
-

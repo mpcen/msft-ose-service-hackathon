@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn, Generated } from
 
 @Entity()
 export class Snapshot {
-    
+
     @PrimaryColumn({
         length:39
     })
@@ -27,8 +27,8 @@ export class Snapshot {
         generated:true,
         unique:true,
         primary:true
-    }) 
-    snapshotId: number; 
+    })
+    snapshotId: number;
 
     @Column('datetime')
     dateModified:  Date;

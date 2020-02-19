@@ -13,12 +13,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-<<<<<<< HEAD
-        "@azure/storage-blob": "^12.0.0",
-        "azure-storage": "^2.10.3",
-=======
         "@azure/storage-blob": "^12.1.0",
->>>>>>> Use @azure/storage-blob package
         "body-parser": "^1.19.0",
         "cors": "^2.8.5",
         "dotenv": "^8.2.0",

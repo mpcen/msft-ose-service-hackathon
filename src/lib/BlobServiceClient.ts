@@ -63,6 +63,7 @@ export default class BlobServiceClient implements IBlobServiceClient {
     if (!options.connectionString) {
       throw new Error('connection string are required for BlobServiceClient');
     }
+    this.container = options.container;
     return createBlobService(options.connectionString).withFilter(new ExponentialRetryPolicyFilter());
   }
 }
@@ -80,4 +81,18 @@ interface IBlobServiceClientOptionsWithSasUrl {
 
 interface IBlobServiceClientOptionsWithConnectionString {
   connectionString: string;
+  container: string;
+}
+
+let blobService: IBlobServiceClient;
+
+export function getBlobManager() {
+  if (blobService) {
+    return blobService;
+  }
+  return blobService = new BlobServiceClient(
+    process.env.BLOB_SERVICE_SAS_URL ?
+      { sas: process.env.BLOB_SERVICE_SAS_URL } :
+      { connectionString: process.env.Blob_SERVICE_CONNECTION_STRING, container: process.env.BLOB_SERVICE_CONTAINER}
+  );
 }

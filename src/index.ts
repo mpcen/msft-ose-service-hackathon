@@ -5,6 +5,7 @@ import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import { createConnection } from 'typeorm';
+import { serializeError } from 'serialize-error';
 
 import { ormConfig } from '../ormConfig';
 import { AppRoutes } from './routes';
@@ -35,6 +36,20 @@ createConnection(ormConfig)
         });
 
         app.listen(PORT, () => console.log(`Express server running on port ${PORT}`));
+        // error handler
+        app.use((err: Error, req: express.Request, res: express.Response, _next: express.NextFunction) => {
+            const status = (err as any).status || 500;
+            res.status(status)
+                .type('application/json')
+                .send({
+                    error: {
+                        code: status,
+                        innererror: serializeError(err),
+                        message: err.message,
+                    },
+                });
+            console.error(`Returned error ${status}: ${err.message}`);
+        });
     })
     .catch(error => console.log('TypeORM connection error', error));
 

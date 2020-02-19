@@ -29,7 +29,9 @@ DB_USERNAME=root
 DB_PASSWORD=secret
 DB_NAME=hackathondb
 DB_PORT=3306
-AZURE_STORAGE_CONNECTION_STRING={Windows user could create a connection string}
+AZURE_STORAGE_CONNECTION_STRING=UseDevelopmentStorage=true
+EndpointSuffix=core.windows.net
+AZURE_STORAGE_CONTAINER_NAME=oseservicecontainer
 ```
 
 ## 3. Install project and dependencies:

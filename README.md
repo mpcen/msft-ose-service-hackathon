@@ -101,43 +101,4 @@ Need to ignore some files/directories so they don't get checked in?
 
 ## Sample requests:
 
-GET localhost:5000/orgname/reponame/snapshots/12345?commit=usgf873ewfewr&release=qqq&workflow=mmmmm&branch=master&run=98765
-
-POST localhost:5000/orgname/reponame/snapshots
-
-```
-{
-        "locations": [
-            {
-                "path": "path/to/metadata/file/package.json",
-                "components": [
-                    {
-                        "coordinates": {
-                            "type": "npm",
-                            "name": "express",
-                            "version": "4.0.0"
-                        },
-                        "usage": {
-                            "devDependency": false
-                        },
-                        "dependencies": [{
-                        	"coordinates": {
-                        		"type": "npm",
-                                "name": "ajv",
-                                "version": "6.11.0"
-                        	}
-                        }],
-                        "directDependency": true
-                    }
-                ],
-                "metadata": {
-                    "commit": "jgljlgjrgjortgrtop",
-                    "branch": "master",
-                    "release": "",
-                    "workflow": "123",
-                    "run": "567"
-                }
-            }
-        ]
-    }
-```
+Install REST Client VS Code plugin and trigger requests in sampleRequests.http.

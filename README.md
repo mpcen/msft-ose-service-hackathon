@@ -98,9 +98,9 @@ Need to ignore some files/directories so they don't get checked in?
 
 ## Sample requests:
 
-GET localhost:5000/snapshots/12345?commit=usgf873ewfewr&release=qqq&workflow=mmmmm&branch=master&run=98765
+GET localhost:5000/orgname/reponame/snapshots/12345?commit=usgf873ewfewr&release=qqq&workflow=mmmmm&branch=master&run=98765
 
-POST localhost:5000/snapshots
+POST localhost:5000/orgname/reponame/snapshots
 
 ```
 {

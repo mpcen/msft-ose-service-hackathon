@@ -22,12 +22,12 @@ export const AppRoutes: Route[] = [
         action: postComponent
     },
     {
-        path: '/snapshots/:id',
+        path: '/:org/:repo/snapshots/:id',
         method: 'get',
         action: getSnapshots
     },
     {
-        path: '/snapshots',
+        path: '/:org/:repo/snapshots',
         method: 'post',
         action: postSnapshots
     }

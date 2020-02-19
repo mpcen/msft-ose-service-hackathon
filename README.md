@@ -29,9 +29,7 @@ DB_USERNAME=root
 DB_PASSWORD=secret
 DB_NAME=hackathondb
 DB_PORT=3306
-BLOB_SERVICE_SAS_URL={Mac users could generate a shared access signature for the blob containing}
 Blob_SERVICE_CONNECTION_STRING={Windows user could create a connection string}
-BLOB_SERVICE_CONTAINER=oseservicecontainer
 ```
 
 ## 3. Install project and dependencies:

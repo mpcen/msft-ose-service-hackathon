@@ -32,10 +32,10 @@ export const getSnapshots = async (req: Request, res: Response) => {
                         ],
                         directDependency: true
                     }
-                ],
-                metadata: req.query
+                ]
             }
-        ]
+        ],
+        metadata: req.query
     };
     console.log(`GET /${req.params.org}/${req.params.repo}/snapshots/${req.params.id} response:`, 'req.query.params:', JSON.stringify(responseBody, null, 2));
     res.json(responseBody);

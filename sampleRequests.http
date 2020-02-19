@@ -28,16 +28,16 @@ content-type: application/json
                     }],
                     "directDependency": true
                 }
-            ],
-            "metadata": {
-                "commit": "jgljlgjrgjortgrtop",
-                "branch": "master",
-                "release": "",
-                "workflow": "123",
-                "run": "567"
-            }
+            ]
         }
-    ]
+    ],
+    "metadata": {
+        "commit": "jgljlgjrgjortgrtop",
+        "branch": "master",
+        "release": "",
+        "workflow": "123",
+        "run": "567"
+    }
 }
 
 ###

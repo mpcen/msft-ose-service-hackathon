@@ -1,8 +1,13 @@
 import { Request, Response } from 'express';
+import { getAlertService } from '../../business/AlertService';
 
 export const getAlerts = async (req: Request, res: Response) => {
-    console.log(`GET /${req.params.org}/${req.params.repo}/alerts/${req.params.id} id:`, 'req.query.params:', req.query);
+    console.log(`GET /${req.params.org}/${req.params.repo}/alerts/${req.params.snapshotId} id:`, 'req.query.params:', req.query);
+    const alertService = await getAlertService();
+    const result = await alertService.getAlertFromCDS();
+    console.log(result);
     // TODO: fetch from DB and blob storage
+    /*
     const responseBody = {
         id: '1',
         createdAt: new Date(),
@@ -22,5 +27,5 @@ export const getAlerts = async (req: Request, res: Response) => {
         ]
     };
     console.log(`GET /${req.params.org}/${req.params.repo}/alerts/${req.params.id} response:`, 'req.query.params:', JSON.stringify(responseBody, null, 2));
-    res.json(responseBody);
-};
+    res.json(responseBody);*/
+}

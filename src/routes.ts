@@ -33,7 +33,7 @@ export const AppRoutes: Route[] = [
         action: postSnapshots
     },
     {
-        path: '/:org/:repo/alerts',
+        path: '/:org/:repo/alerts/:snapshotId',
         method: 'get',
         action: getAlerts
     },

@@ -37,3 +37,4 @@ createConnection(ormConfig)
         app.listen(PORT, () => console.log(`Express server running on port ${PORT}`));
     })
     .catch(error => console.log('TypeORM connection error', error));
+

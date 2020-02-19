@@ -3,6 +3,10 @@ import { getManager } from 'typeorm';
 import { Snapshot } from '../database/entity/Snapshot';
 
 const uuidv1 = require('uuid/v1')
+class Tag {
+    key: string;
+    value: string;
+}
 
 export default class SnapshotService {
   private blobService: BlobServiceClient;
@@ -19,6 +23,28 @@ export default class SnapshotService {
         await this.containerClient.create();
     }
   }
+
+
+  public async  GetLatestSnapshotFromQuery(org: string, repo: string, queries: Tag[])  {
+    // Given a set of queries, find the latest snapshot that matches all of them.
+        const latestSnapshot = await getManager()
+            .getRepository(Snapshot).createQueryBuilder("s")
+            .innerJoin(qb => { 
+                return qb.subQuery().from(
+                    "(SELECT * FROM JSON_TABLE(\'" + JSON.stringify(queries) +"\','$[*]' COLUMNS(k VARCHAR(40) PATH '$.key' , v VARCHAR(40) PATH '$.value')) `q`)" ,
+                    "q");},
+            "q",
+            "s.repo = :repo AND s.org = :org AND s.key = q.k AND s.value = q.v",
+            {repo: repo, org: org})
+            .groupBy("BlobId")
+            .select("*, COUNT(blobId) as matches")
+            .having("matches = :queries",  {queries: queries.length})
+            .orderBy("snapshotId","DESC")
+            .getRawOne();
+        console.log(latestSnapshot);
+        return latestSnapshot
+                
+    }
 
   public async saveSnapshot(snapshot: ISnapshot): Promise<void> {
     const snapshotEntity = getManager().getRepository(Snapshot);
@@ -104,3 +130,7 @@ export async function getSnapshotService() {
   await snapshotService.init();
   return snapshotService;
 }
+
+
+
+

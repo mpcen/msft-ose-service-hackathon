@@ -20,11 +20,11 @@ content-type: application/json
                         "devDependency": false
                     },
                     "dependencies": [{
-                      "coordinates": {
-                        "type": "npm",
+                        "coordinates": {
+                            "type": "npm",
                             "name": "ajv",
                             "version": "6.11.0"
-                      }
+                        }
                     }],
                     "directDependency": true
                 }
@@ -34,10 +34,12 @@ content-type: application/json
     "metadata": {
         "commit": "jgljlgjrgjortgrtop",
         "branch": "master",
-        "release": "",
-        "workflow": "123",
-        "run": "567"
-    }
+        "key": "workflow",
+        "value": "123",
+        "dateModified": "2020-02-19T01:27:59.532Z"
+    },
+    "id": 12345,
+    "createdAt": "2020-02-19T01:27:59.532Z"
 }
 
 ###

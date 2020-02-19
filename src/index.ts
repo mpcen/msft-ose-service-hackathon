@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 import 'reflect-metadata';
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import { createConnection } from 'typeorm';
@@ -37,7 +37,7 @@ createConnection(ormConfig)
 
         app.listen(PORT, () => console.log(`Express server running on port ${PORT}`));
         // error handler
-        app.use((err: Error, req: express.Request, res: express.Response, _next: express.NextFunction) => {
+        app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
             const status = (err as any).status || 500;
             res.status(status)
                 .type('application/json')

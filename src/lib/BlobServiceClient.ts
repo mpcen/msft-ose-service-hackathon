@@ -22,9 +22,7 @@ export default class BlobServiceClient implements IBlobServiceClient {
       blobService = this.createBlobServiceWithConnectionString(options);
     }
     this.getBlobToText = promisify<string, string, string>(blobService.getBlobToText.bind(blobService));
-    this.createBlockBlobFromText = promisify<string, string, string, BlobService.BlobResult>(
-      blobService.createBlockBlobFromText.bind(blobService),
-    );
+    this.createBlockBlobFromText = promisify<string, string, string, BlobService.BlobResult>(blobService.createBlockBlobFromText.bind(blobService), );
   }
 
   public async readBlob(blobName: string): Promise<string | undefined> {

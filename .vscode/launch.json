@@ -12,8 +12,10 @@
         "<node_internals>/**"
       ],
       "preLaunchTask": "tsc: build - tsconfig.json",
-      "program": "${workspaceFolder}/src/index.ts",
-      "outFiles": ["${workspaceFolder}/dist/**/*.js"]
+      "program": "${workspaceFolder}/src/blobClientIndex.ts",
+      "outFiles": [
+        "${workspaceFolder}/dist/**/*.js"
+      ]
     }
   ]
 }

@@ -19,7 +19,7 @@ export class JobService {
 
     let projections = this.getProjectionFromSnapshots(pendingSnapshots);
     await this.saveProjections(projections);
-    let latestSnapshotProcessed = Math.max(...pendingSnapshots.map(snapshot => {return snapshot.id}));
+    let latestSnapshotProcessed = Math.max(...pendingSnapshots.map(snapshot => {return snapshot.metadata.snapshotId}));
     await this.updateJobProcessSnapshot(latestSnapshotProcessed, jobName)
   }
 
@@ -36,13 +36,14 @@ export class JobService {
   private getProjectionFromSnapshots(snapshots: ISnapshot[]): SnapshotBranchProjection[]{
     var snapshotBranchProjection: SnapshotBranchProjection[] = [];
     snapshots.forEach(snapshot => {
+      var branch = this.getSnapshotBranch(snapshot)
       snapshot.locations.forEach(location => { 
         location.components.forEach(component =>{
           let branchProjection = new SnapshotBranchProjection();
-          branchProjection.OrganizationId = snapshot.org;
-          branchProjection.RepositoryId = snapshot.repo;
-          branchProjection.SnapshotId = snapshot.id;
-          branchProjection.Branch = snapshot.branch;
+          branchProjection.OrganizationId = snapshot.metadata.org;
+          branchProjection.RepositoryId = snapshot.metadata.repo;
+          branchProjection.SnapshotId = snapshot.metadata.snapshotId;
+          branchProjection.Branch = branch;
           branchProjection.ComponentName = component.coordinates.name;
           branchProjection.ComponentVersion = component.coordinates.version;
           branchProjection.ComponentType = component.coordinates.type
@@ -52,6 +53,11 @@ export class JobService {
       });
     });
     return snapshotBranchProjection;
+  }
+
+  private getSnapshotBranch(snapshot: ISnapshot): string
+  {
+    return snapshot.metadata.metadata.find(metadata => metadata.key == "branch").value;
   }
 
   private async saveProjections(projections: SnapshotBranchProjection[]): Promise<void> {

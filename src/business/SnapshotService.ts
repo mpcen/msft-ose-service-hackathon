@@ -44,21 +44,20 @@ export default class SnapshotService {
             .orderBy("snapshotId","DESC")
             .getRawOne();
         console.log(latestSnapshot);
-        return latestSnapshot
-                
+        return latestSnapshot           
     }
+
   public async GetSnapshotsWithIdGreaterThan(snapshotId: number): Promise<ISnapshot[]> {
       let snapshots: Snapshot[] = await getManager()
       .getRepository(Snapshot)
       .find({snapshotId: MoreThan(snapshotId)})
 
       return Promise.all(snapshots.map( async (snapshot): Promise<ISnapshot> => {
+        var test = await this.getById("orgname","reponame",snapshot.snapshotId);
         const blockBlobClient = this.containerClient.getBlockBlobClient(`${snapshot.blobId}.json`);
         var downloadBlockResponse = await blockBlobClient.download(0);
         var snapshotModel = JSON.parse(await this.streamToString(downloadBlockResponse.readableStreamBody));
-        snapshotModel.org = snapshot.org;
-        snapshotModel.repo = snapshot.repo;
-        snapshotModel.branch = "master" // TODO: get this information from the blob
+        snapshotModel.metadata.snapshotId = snapshot.snapshotId
         return snapshotModel;
       }));
   }

@@ -1,6 +1,7 @@
 import { BlobServiceClient, ContainerClient, ContainerCreateResponse } from '@azure/storage-blob';
-import { getManager } from 'typeorm';
+import { getManager, MoreThan } from 'typeorm';
 import { Snapshot } from '../database/entity/Snapshot';
+import { stringify } from 'querystring';
 
 const uuidv1 = require('uuid/v1')
 class Tag {
@@ -27,6 +28,7 @@ export default class SnapshotService {
 
   public async  GetLatestSnapshotFromQuery(org: string, repo: string, queries: Tag[])  {
     // Given a set of queries, find the latest snapshot that matches all of them.
+        let test = await getManager();
         const latestSnapshot = await getManager()
             .getRepository(Snapshot).createQueryBuilder("s")
             .innerJoin(qb => { 
@@ -45,6 +47,17 @@ export default class SnapshotService {
         return latestSnapshot
                 
     }
+  public async GetSnapshotsWithIdGreaterThan(snapshotId: number): Promise<ISnapshot[]> {
+      let snapshots: Snapshot[] = await getManager()
+      .getRepository(Snapshot)
+      .find({snapshotId: MoreThan(snapshotId)})
+
+      return Promise.all(snapshots.map( async (snapshot): Promise<ISnapshot> => {
+        const blockBlobClient = this.containerClient.getBlockBlobClient(`${snapshot.blobId}.json`);
+        var downloadBlockResponse = await blockBlobClient.download(0);
+        return JSON.parse(await this.streamToString(downloadBlockResponse.readableStreamBody));
+      }));
+  }
 
   public async saveSnapshot(snapshot: ISnapshot): Promise<void> {
     const snapshotEntity = getManager().getRepository(Snapshot);
@@ -92,16 +105,17 @@ interface ISnapshotServiceOptions {
   connectionString: string
 }
 
-interface ISnapshot {
-  id: string,
+export interface ISnapshot {
+  id: number,
   org: string,
   repo: string,
+  branch: string,
   locations: ILocation[],
   metadata: Snapshot;
   createdAt: Date,
 }
 
-interface ILocation {
+export interface ILocation {
   path: string,
   components: [{
     coordinates: ICoordinates,
@@ -113,13 +127,13 @@ interface ILocation {
   }]
 }
 
-interface ICoordinates {
+export interface ICoordinates {
   type: ICoordinatesType,
   name: string,
   version: string
 }
 
-type ICoordinatesType = 'nuget' | 'npm' | 'maven' | 'git' | 'rubygem' | 'pypi' | 'cargo' | 'other' | 'file';
+export type ICoordinatesType = 'nuget' | 'npm' | 'maven' | 'git' | 'rubygem' | 'pypi' | 'cargo' | 'other' | 'file';
 
 let snapshotService: SnapshotService;
 

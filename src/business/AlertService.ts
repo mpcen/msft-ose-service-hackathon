@@ -8,27 +8,40 @@ export default class AlertService {
     public async getAlertFromCDS(org: string, repo: string, snapshotId: number) {
         const snapshotService = await getSnapshotService();
         const snapshot = await snapshotService.getById(org, repo, snapshotId);
-      
-        // Todo integration here
-        var componentName = "express";
-        var version = "4.0.0";
-        var type = "npm"; 
+        let components = snapshot.locations.map((location: { components: any; }) => location.components);
+        let coordinates = components[0].map((x: { coordinates: any; }) => x.coordinates);
+        var result = new Array();
+
+        for(var coordinate of coordinates){                        
+            var data = this.GetRequestData(coordinate);
+
+            const response = await axios({
+                method: 'post',
+                url: 'https://cds.cg.microsoft.com/api/searches?$expand=vulnerabilities',
+                data: data          
+            })
+
+            var alert = new Alert(coordinate, response.data);
+            result.push(alert);
+        }
+
+        return result;
+    }
+
+    public GetRequestData(coordinate: any){
+        var componentName = coordinate.name;
+        var version = coordinate.version;
+        var type = coordinate.type; 
         var forgeKey = this.ForgeToKey(type);
         var searchRequest = this.GenerateComponentSearchRequest(type, componentName, version);
 
-        var component = {
+        var requestData = {
             "component": {
-            [forgeKey]: searchRequest
+                [forgeKey]: searchRequest
             }
         };
 
-        const response = await axios({
-            method: 'post',
-            url: 'https://cds.cg.microsoft.com/api/searches?$expand=vulnerabilities',
-            data: component          
-        })
-
-        return response.data
+        return requestData;
     }
 
     public ForgeToKey(type: string) : string
@@ -52,7 +65,6 @@ export default class AlertService {
         let searchRequest;
         switch (type.toLocaleLowerCase())
         {
-            // Does this need github as well?
             case "maven":
                 searchRequest = 
                 {                    
@@ -111,4 +123,14 @@ export async function getAlertService() {
     }
     alertService = new AlertService();
     return alertService;
+}
+
+class Alert{
+    coordinate: any;
+    vulnerabilities: any;
+
+    constructor(coordinate: any, vulnerabilities: any){
+        this.coordinate =  coordinate;
+        this.vulnerabilities = vulnerabilities;
+    }
 }

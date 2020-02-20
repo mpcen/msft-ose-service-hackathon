@@ -1,29 +1,34 @@
 import axios from 'axios';
+import { getSnapshotService } from './SnapshotService';
 
 export default class AlertService {
     constructor(){
     }
 
-    public async getAlertFromCDS(org: string, repo: string, snapshotId: number) {    
-      var componentName = "express";
-      var version = "4.0.0";
-      var type = "npm"; 
-      var forgeKey = this.ForgeToKey(type);
-      var searchRequest = this.GenerateComponentSearchRequest(type, componentName, version);
+    public async getAlertFromCDS(org: string, repo: string, snapshotId: number) {
+        const snapshotService = await getSnapshotService();
+        const snapshot = await snapshotService.getById(org, repo, snapshotId);
+      
+        // Todo integration here
+        var componentName = "express";
+        var version = "4.0.0";
+        var type = "npm"; 
+        var forgeKey = this.ForgeToKey(type);
+        var searchRequest = this.GenerateComponentSearchRequest(type, componentName, version);
 
-      var component = {
-          "component": {
+        var component = {
+            "component": {
             [forgeKey]: searchRequest
-          }
-      };
+            }
+        };
 
-      const response = await axios({
-          method: 'post',
-          url: 'https://cds.cg.microsoft.com/api/searches?$expand=vulnerabilities',
-          data: component          
-      })
+        const response = await axios({
+            method: 'post',
+            url: 'https://cds.cg.microsoft.com/api/searches?$expand=vulnerabilities',
+            data: component          
+        })
 
-      return response.data
+        return response.data
     }
 
     public ForgeToKey(type: string) : string

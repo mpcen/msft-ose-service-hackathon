@@ -54,4 +54,3 @@ createConnection(ormConfig)
         (new JobRunner()).start();
     })
     .catch(error => console.log('TypeORM connection error', error));
-

@@ -5,7 +5,9 @@
     "main": "index.js",
     "scripts": {
         "start": "node ./dist/src/index.js",
-        "dev": "ts-node-dev --respawn --transpileOnly src/index.ts",
+        "client": "cd client && npm start",
+        "service": "ts-node-dev --respawn --transpileOnly src/index.ts",
+        "dev": "concurrently \"npm run service\" \"npm run client\"",
         "build": "rimraf ./dist && tsc",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
@@ -15,11 +17,13 @@
     "dependencies": {
         "@azure/storage-blob": "^12.1.0",
         "body-parser": "^1.19.0",
+        "concurrently": "^5.1.0",
         "cors": "^2.8.5",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
         "mysql": "^2.14.1",
         "reflect-metadata": "^0.1.10",
+        "serialize-error": "^5.0.0",
         "typeorm": "^0.2.22",
         "typescript": "^3.7.5",
         "uuid": "^3.4.0",
@@ -30,6 +34,7 @@
         "@types/cors": "^2.8.6",
         "@types/express": "^4.17.2",
         "@types/node": "^8.0.29",
+        "@types/serialize-error": "^4.0.1",
         "@types/uuidv4": "^5.0.0",
         "nodemon": "^2.0.2",
         "rimraf": "^3.0.2",

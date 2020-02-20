@@ -59,3 +59,4 @@ content-type: application/json
 }
 
 ###
+GET http://localhost:5000/orgname/reponame/alerts/1

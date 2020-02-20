@@ -12,10 +12,11 @@ const useForm = initialState => {
         setFilterId(filterId + 1);
     };
     const removeFilterFormField = filterValue => {
-        setFilters([...filters.filter(filter => filter.value !== filterValue)])
-        
+        const filterId = filterValue.split(': ')[0];
+
+        setFilters([...filters.filter(filter => filter.value !== filterId)])
         setValues(values => {
-            delete values[filterValue.toLowerCase()];
+            delete values[filterId.toLowerCase()];
 
             return {
                 ...values

@@ -28,7 +28,7 @@ const SnapshotForm = () => {
                                 size="mini"
                             >
                                 <Icon name="close" />
-                                {filter.value}
+                                {filter.value}: {values[filter.value.toLowerCase()]}
                             </Button>
                         </div>
                     ))}

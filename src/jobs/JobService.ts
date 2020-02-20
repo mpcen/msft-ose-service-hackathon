@@ -3,7 +3,6 @@ import {SnapshotBranchProjection} from '../database/entity/SnapshotBranchProject
 import {ISnapshot} from '../business/SnapshotService'
 import { getSnapshotService } from '../business/SnapshotService';
 import { getManager, EntityManager } from 'typeorm';
-import { createConnection } from 'net';
 
 export class JobService {
   constructor() { }
@@ -17,13 +16,11 @@ export class JobService {
       console.info("No pending snapshots to process")
       return;
     }
+
     let projections = this.getProjectionFromSnapshots(pendingSnapshots);
-    await getManager().transaction( async transactionalEntityManager => {
-      await this.saveProjections(transactionalEntityManager, projections);
-      let latestSnapshotProcessed = Math.max(...pendingSnapshots.map(snapshot => {return snapshot.id}));
-      await this.updateJobProcessSnapshot(transactionalEntityManager, latestSnapshotProcessed, jobName)
-    });
-   
+    await this.saveProjections(projections);
+    let latestSnapshotProcessed = Math.max(...pendingSnapshots.map(snapshot => {return snapshot.id}));
+    await this.updateJobProcessSnapshot(latestSnapshotProcessed, jobName)
   }
 
   private async getPendingSnapshots(jobName: string): Promise<ISnapshot[]> {
@@ -37,7 +34,7 @@ export class JobService {
   }
 
   private getProjectionFromSnapshots(snapshots: ISnapshot[]): SnapshotBranchProjection[]{
-    var snapshotBranchProjection: SnapshotBranchProjection[];
+    var snapshotBranchProjection: SnapshotBranchProjection[] = [];
     snapshots.forEach(snapshot => {
       snapshot.locations.forEach(location => { 
         location.components.forEach(component =>{
@@ -57,16 +54,25 @@ export class JobService {
     return snapshotBranchProjection;
   }
 
-  private async saveProjections(transactionManager: EntityManager, projections: SnapshotBranchProjection[]): Promise<void> {
-    await transactionManager.save(projections)
+  private async saveProjections(projections: SnapshotBranchProjection[]): Promise<void> {
+    await getManager().transaction( async transactionalEntityManager => {
+      await transactionalEntityManager.save<SnapshotBranchProjection>(projections)
+    });
   }
 
-  private async updateJobProcessSnapshot(transactionManager: EntityManager, snapshotid: number, jobName: string): Promise<void> {
-    var jobProcessedSnapshot:ProcessedSnapshots = await transactionManager
+  private async updateJobProcessSnapshot(snapshotid: number, jobName: string): Promise<void> {
+
+    var jobProcessedSnapshot:ProcessedSnapshots = await getManager()
+      .getRepository(ProcessedSnapshots)
       .findOne(jobName)
 
+    if (jobProcessedSnapshot == null)
+    {
+      jobProcessedSnapshot = new ProcessedSnapshots();
+      jobProcessedSnapshot.JobName = jobName;
+    }
     jobProcessedSnapshot.SnapshotId = snapshotid
 
-    await transactionManager.save(jobProcessedSnapshot)
+    await getManager().save(jobProcessedSnapshot)
   }
 }

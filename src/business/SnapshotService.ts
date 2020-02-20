@@ -55,7 +55,11 @@ export default class SnapshotService {
       return Promise.all(snapshots.map( async (snapshot): Promise<ISnapshot> => {
         const blockBlobClient = this.containerClient.getBlockBlobClient(`${snapshot.blobId}.json`);
         var downloadBlockResponse = await blockBlobClient.download(0);
-        return JSON.parse(await this.streamToString(downloadBlockResponse.readableStreamBody));
+        var snapshotModel = JSON.parse(await this.streamToString(downloadBlockResponse.readableStreamBody));
+        snapshotModel.org = snapshot.org;
+        snapshotModel.repo = snapshot.repo;
+        snapshotModel.branch = "master" // TODO: get this information from the blob
+        return snapshotModel;
       }));
   }
 

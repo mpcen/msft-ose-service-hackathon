@@ -9,11 +9,11 @@ import { serializeError } from 'serialize-error';
 
 import { ormConfig } from '../ormConfig';
 import { AppRoutes } from './routes';
+import { getSnapshotService } from './business/SnapshotService';
 
 // Ideally the continuously running job would reside in a separate repository and run as a separate process.
 // We would also use queues and make the job scalable. This is an oversimplified hackathon-quality implementation of a job runner.
 import { JobRunner } from './jobs/JobRunner';
-(new JobRunner()).start();
 
 const PORT = process.env.PORT || 5000;
 
@@ -50,5 +50,7 @@ createConnection(ormConfig)
                 });
             console.error(`Returned error ${status}: ${err.message}`);
         });
+
+        (new JobRunner()).start();
     })
     .catch(error => console.log('TypeORM connection error', error));

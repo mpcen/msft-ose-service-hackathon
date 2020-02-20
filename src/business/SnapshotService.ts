@@ -124,6 +124,7 @@ export interface ISnapshot {
 export interface ILocation {
   path: string,
   components: [{
+    coordinates: ICoordinates,
     usage: {
       devDependency: boolean
     },

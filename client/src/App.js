@@ -6,25 +6,27 @@ import Organization from './organization/Organization';
 
 const App = () => {
     return (
-        <Router>
-            <div>
-                <nav>
-                    <ul>
-                        <li><Link to="/">Snapshot</Link></li>
-                        <li><Link to="/organization">Organization</Link></li>
-                    </ul>
-                </nav>
-            </div>
+        <div style={{ padding: '0 20px' }}>
+            <Router>
+                <div>
+                    <nav>
+                        <ul>
+                            <li><Link to="/">Snapshot</Link></li>
+                            <li><Link to="/organization">Organization</Link></li>
+                        </ul>
+                    </nav>
+                </div>
 
-            <Switch>
-                <Route exact path="/">
-                    <SnapshotForm />
-                </Route>
-                <Route exact path="/organization">
-                    <Organization />
-                </Route>
-            </Switch>
-        </Router>
+                <Switch>
+                    <Route exact path="/">
+                        <SnapshotForm />
+                    </Route>
+                    <Route exact path="/organization">
+                        <Organization />
+                    </Route>
+                </Switch>
+            </Router>
+        </div>
     );
 }
 

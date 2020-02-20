@@ -1,53 +1,69 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Form, Icon } from 'semantic-ui-react';
 
-import './snapshotForm.css';
+import useForm from './useForm';
 import SnapshotFormField from './SnapshotFormField';
 
-const SnapshotForm = () => {
-    const [filterId, setFilterId] = useState(0);
-    const [filters, setFilters] = useState([]);
-    const [organization, setOrganization] = useState('');
-    const [repository, setRepository] = useState('');
-    const addFilterFormField = () => {
-        setFilters(filters => [...filters, { filterId, value: '' }]);
-        setFilterId(filterId + 1);
-    };
-    const removeFilterFormField = filterValue => setFilters([...filters.filter(filter => filter.value !== filterValue)]);
+import './snapshotForm.css';
 
+const INITIAL_STATE = {
+    organization: 'orgname',
+    repository: 'reponame'
+}
+
+const SnapshotForm = () => {
+    const { values, handleChange, handleSubmit, filters, setFilters, addFilterFormField, removeFilterFormField, isSubmitting } = useForm(INITIAL_STATE);
+    
     return (
         <div>
             <h1>Snapshot</h1>
 
-            <Form className="snapshot-form">
+            <div className="filter-container">
+                <div className="filtered">
+                    {filters.map(filter => (
+                        <div key={filter.filterId} onClick={e => removeFilterFormField(e.currentTarget.innerText)}>
+                            <Button
+                                style={{ display: filter.value.length ? 'inline' : 'none', zIndex: 0 }}
+                                color="green"
+                                size="mini"
+                            >
+                                <Icon name="close" />
+                                {filter.value}
+                            </Button>
+                        </div>
+                    ))}
+                </div>
+
+                <Button
+                    disabled={(filters.length !== 0) && (filters[filters.length - 1].value === '' || filters.length === 6)}
+                    onClick={addFilterFormField}
+                >
+                        Add Filter
+                </Button>
+            </div>
+
+            <Form className="snapshot-form" onSubmit={handleSubmit}>
                 <Form.Field required>
                     <label>Organization</label>
-                    <input placeholder='Organization' value={organization} onChange={e => setOrganization(e.target.value)} />
+                    <input
+                        required
+                        name="organization"
+                        placeholder='Organization'
+                        value={values.organization}
+                        onChange={handleChange}
+                    />
                 </Form.Field>
 
                 <Form.Field required>
                     <label>Repository</label>
-                    <input placeholder='Repository' value={repository} onChange={e => setRepository(e.target.value)} />
+                    <input
+                        required
+                        name="repository"
+                        placeholder='Repository'
+                        value={values.repository}
+                        onChange={handleChange}
+                    />
                 </Form.Field>
-
-                <div className="filter-container">
-                    {filters.length > 0 && <h2>Filters</h2>}
-                    
-                    <div>
-                        {filters.map(filter => (
-                            <Button
-                                style={{ display: filter.value.length ? 'inline' : 'none' }}
-                                key={filter.filterId}
-                                color="blue"
-                                size="mini"
-                                onClick={(e) => removeFilterFormField(e.target.textContent)}
-                            >
-                                <Icon name="close" />
-                                <span>{filter.value}</span>
-                            </Button>
-                        ))}
-                    </div>
-                </div>
 
                 <div className="filter-field-container">
                     {filters.map(filter => (
@@ -56,13 +72,20 @@ const SnapshotForm = () => {
                             filter={filter}
                             setFilters={setFilters}
                             currentFilters={filters}
+                            removeFilterFormField={removeFilterFormField}
+                            values={values}
+                            handleChange={handleChange}
                         />
                     ))}
                 </div>
 
-                <div>
-                    <Button onClick={addFilterFormField}>Add Filter</Button>
-                </div>
+                <Button
+                    color="blue"
+                    type="submit"
+                    loading={isSubmitting}
+                >
+                    Submit
+                </Button>
             </Form>
         </div>
     );

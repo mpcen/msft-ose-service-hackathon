@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Form, Dropdown } from 'semantic-ui-react';
+import React from 'react';
+import { Form, Dropdown, Icon } from 'semantic-ui-react';
 
 import './snapshotFormField.css';
 
@@ -36,9 +36,7 @@ const options = [
     },
 ]
 
-const SnapshotFormField = ({ filter, setFilters, currentFilters }) => {
-    const [inputValue, setInputValue] = useState('')
-
+const SnapshotFormField = ({ filter, setFilters, currentFilters, removeFilterFormField, values, handleChange }) => {
     return (
         <Form.Field>
             <div className="form-field-container">
@@ -55,7 +53,18 @@ const SnapshotFormField = ({ filter, setFilters, currentFilters }) => {
                         }}
                     />
                 </div>
-                <input value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+
+                <input
+                    required
+                    className="form-input"
+                    name={filter.value.toLowerCase()}
+                    value={values[filter.value.toLowerCase()] || ''}
+                    onChange={handleChange}
+                />
+
+                <div onClick={() => removeFilterFormField(filter.value)}>
+                    <Icon color="red" size="large" name="close" />
+                </div>
             </div>
         </Form.Field>
     );

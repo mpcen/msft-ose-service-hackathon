@@ -1,5 +1,5 @@
-import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn, Generated } from 'typeorm';
-
+import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
+import { Metadata } from './Metadata';
 @Entity()
 export class Snapshot {
     @PrimaryColumn({
@@ -8,32 +8,29 @@ export class Snapshot {
     org: string;
 
     @PrimaryColumn({
+        unique: true,
         length: 100,
     })
     repo: string;
 
-    @PrimaryColumn({
-        length: 40,
-    })
-    key: string;
-
-    @PrimaryColumn({
-        length: 40,
-    })
-    value: string;
-
     @Column({
-        generated: true,
-        unique: true,
         primary: true,
+        unique: true,
+        generated: true
     })
     snapshotId: number;
 
-    @Column('datetime')
+    @Column({
+        default: () => "CURRENT_TIMESTAMP"
+    })
     dateModified: Date;
 
     @Column({
         length: 40,
     })
     blobId: string;
+
+    @OneToMany(() => Metadata, metadata => metadata.snapshotId, { cascade: ["insert","remove"] } )
+    metadata: Metadata[]
+    
 }

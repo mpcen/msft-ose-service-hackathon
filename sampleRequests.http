@@ -38,8 +38,6 @@ content-type: application/json
         "value": "123",
         "dateModified": "2020-02-19T01:27:59.532Z"
     },
-    "id": 12345,
-    "createdAt": "2020-02-19T01:27:59.532Z"
 }
 
 ###

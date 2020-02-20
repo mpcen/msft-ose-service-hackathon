@@ -1,6 +1,7 @@
 import { BlobServiceClient, ContainerClient, ContainerCreateResponse } from '@azure/storage-blob';
 import { getManager } from 'typeorm';
 import { Snapshot } from '../database/entity/Snapshot';
+import { Metadata } from '../database/entity/Metadata';
 
 const uuidv1 = require('uuid/v1')
 class Tag {
@@ -46,13 +47,15 @@ export default class SnapshotService {
                 
     }
 
-  public async saveSnapshot(snapshot: ISnapshot): Promise<void> {
-    const snapshotEntity = getManager().getRepository(Snapshot);
-    snapshot.metadata.blobId = uuidv1();
-    await snapshotEntity.insert(snapshot.metadata);
-    const blockBlobClient = this.containerClient.getBlockBlobClient(`${snapshot.metadata.blobId}.json`);
+  public async saveSnapshot(snapshot: ISnapshot): Promise<Snapshot> {
+    const snapshotRepository = getManager().getRepository(Snapshot);
+    let snapshotToCreate: Snapshot = snapshot.metadata;
+    snapshotToCreate.blobId = uuidv1();
+    snapshotToCreate.metadata = snapshotToCreate.metadata
+    const blockBlobClient = this.containerClient.getBlockBlobClient(`${snapshotToCreate.blobId}.json`);
     const snapshotBlob = JSON.stringify(snapshot);
     await blockBlobClient.upload(snapshotBlob, snapshotBlob.length);
+    return await snapshotRepository.save(snapshotToCreate);
   }
 
   public async getById(org: string, repo: string, snapshotId: number) {
@@ -104,7 +107,6 @@ interface ISnapshot {
 interface ILocation {
   path: string,
   components: [{
-    coordinates: ICoordinates,
     usage: {
       devDependency: boolean
     },

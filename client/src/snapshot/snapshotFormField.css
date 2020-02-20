@@ -1,0 +1,20 @@
+.filter-container {
+    display: flex;
+}
+
+.form-field-container {
+    display: flex;
+    align-items: center;
+}
+
+.form-field-dropdown-contianer {
+    width: 80px;
+}
+
+.form-input {
+    margin-right: 6px !important;
+}
+
+.field {
+    flex: 1;
+}

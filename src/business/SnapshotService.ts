@@ -46,14 +46,17 @@ export default class SnapshotService {
                 
     }
 
-  public async saveSnapshot(snapshot: ISnapshot): Promise<void> {
-    const snapshotEntity = getManager().getRepository(Snapshot);
-    snapshot.metadata.blobId = uuidv1();
-    await snapshotEntity.insert(snapshot.metadata);
-    const blockBlobClient = this.containerClient.getBlockBlobClient(`${snapshot.metadata.blobId}.json`);
-    const snapshotBlob = JSON.stringify(snapshot);
-    await blockBlobClient.upload(snapshotBlob, snapshotBlob.length);
-  }
+    public async saveSnapshot(snapshot: ISnapshot): Promise<void> {
+      const snapshotEntity = getManager().getRepository(Snapshot);
+      snapshot.metadata.blobId = uuidv1();
+      snapshot.metadata.key = uuidv1();
+      snapshot.metadata.value = uuidv1();
+      snapshot.metadata.dateModified = new Date();
+      await snapshotEntity.insert(snapshot.metadata);
+      const blockBlobClient = this.containerClient.getBlockBlobClient(`${snapshot.metadata.blobId}.json`);
+      const snapshotBlob = JSON.stringify(snapshot);
+      await blockBlobClient.upload(snapshotBlob, snapshotBlob.length);
+    }
 
   public async getById(org: string, repo: string, snapshotId: number) {
     const metadata = await this.getMetadataById(org, repo, snapshotId);

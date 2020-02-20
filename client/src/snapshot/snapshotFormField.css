@@ -1,0 +1,11 @@
+.filter-container {
+    display: flex;
+}
+
+.form-field-container {
+    display: flex;
+}
+
+.form-field-dropdown-contianer {
+    width: 80px;
+}

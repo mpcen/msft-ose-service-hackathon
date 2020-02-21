@@ -17,7 +17,7 @@ const SnapshotViewer = ({ locations, metadata }) => {
                         minimap: { enabled: false }
                     }}
                     editorDidMount={(_, editor) => {
-                        setTimeout(() => { editor.getAction('editor.action.formatDocument').run() }, 100)
+                        setTimeout(() => { editor.getAction('editor.action.formatDocument').run() }, 300)
                     }}
                 />
             </div>
@@ -36,18 +36,12 @@ const SnapshotViewer = ({ locations, metadata }) => {
                     /> */}
                     <Segment inverted>
                         <List divided inverted relaxed>
-                            {metadata.map(({ key, value }, index) => (
-                                <List.Item key={`${key}:${index}`}>
-                                    <List.Content>
-                                        <List.Header>{key}</List.Header>
-                                        {value}
-                                    </List.Content>
-                                </List.Item>
-                            ))}
+                            {makeListItem("Repository",metadata[0].repo,0)}
+                            {makeListItem("Organization",metadata[0].org,1)}
+                            {metadata.map(({ key, value }, index) =>  (makeListItem(key,value,index+2)))}
                         </List>
                     </Segment>
                 </div>
-
                 {/* <div className="alerts">
                     <Editor
                         disabled
@@ -62,6 +56,15 @@ const SnapshotViewer = ({ locations, metadata }) => {
             </div>
         </div>
     );
+}
+
+function makeListItem(header, value, index){
+    return <List.Item key={`${header}:${index}`}>
+    <List.Content>
+        <List.Header>{header}</List.Header>
+        {value}
+    </List.Content>
+</List.Item>
 }
 
 export default SnapshotViewer;

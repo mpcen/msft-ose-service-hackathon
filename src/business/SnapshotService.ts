@@ -56,12 +56,13 @@ export default class SnapshotService {
                     .select(['blobId']);
 
             let snapshot = await latestSnapshotBlob.getRawOne();
-            snapshotBlob =  snapshot ? snapshot["blobId"] : null;
+            snapshotBlob =  snapshot && snapshot["blobId"];
         }
         else {
             const snapshot = await getManager().getRepository(Snapshot).findOne(
-                { where: [{ repo: repo }, { org: org }], order: { org: "DESC", repo: "DESC", snapshotId: "DESC" } });
-            snapshotBlob = snapshot.blobId;
+                { where: [{ repo: repo, org: org }], order: { org: "DESC", repo: "DESC", snapshotId: "DESC" } });
+            console.log(JSON.stringify(snapshot))
+            snapshotBlob = snapshot && snapshot.blobId;
         }
         return snapshotBlob ? await this.getBlobById(snapshotBlob) : null;
 

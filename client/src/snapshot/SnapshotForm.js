@@ -52,10 +52,15 @@ const SnapshotForm = ({ values, handleChange, handleSubmit, setFilters, filters,
             </Button>
 
             {
-                error &&
+                error !== 0 && ((error === 404 &&
+                <Label basic color="red">
+                    No snapshots were found matching these filters
+                </Label>)
+                || (error !== 404 &&
                 <Label basic pointing="left" color="red">
-                    Something went wrong
-                </Label>
+                    Something went wrong, statuscode: {error}
+                </Label>))
+
             }
         </Form>
     );

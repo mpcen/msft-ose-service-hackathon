@@ -6,7 +6,7 @@ const useForm = initialState => {
     const [filterId, setFilterId] = React.useState(0);
     const [filters, setFilters] = React.useState([]);
     const [isSubmitting, setSubmitting] = React.useState(false);
-    const [error, setError] = React.useState(false);
+    const [error, setError] = React.useState(0);
     const [snapshots, setSnapshots] = React.useState(null);
     const [metadata, setMetadata] = React.useState([]);
     const [locations, setLocations] = React.useState([]);
@@ -60,10 +60,12 @@ const useForm = initialState => {
             setLocations(locations);
             setMetadata(metadata.metadata);
             setSnapshots(response.data);
-            setError(false);
+            setError(0);
         } catch(e) {
-            console.log('error:', e)
-            setError(true);
+            setLocations([]);
+            setMetadata([]);
+            setSnapshots([]);
+            setError((e.response || 500) && e.response.status);
         }
 
         setSubmitting(false);

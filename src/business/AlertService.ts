@@ -49,7 +49,7 @@ export default class AlertService {
                 data: data          
             })
 
-            var alert = new Alert(coordinate, response.data);
+            var alert = new Alert(coordinate, response.data.vulnerabilities);
             result.push(alert);
         }
 

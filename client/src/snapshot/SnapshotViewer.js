@@ -4,7 +4,7 @@ import { List, Segment } from 'semantic-ui-react';
 
 import './snapshotViewer.css';
 
-const SnapshotViewer = ({ locations, metadata }) => {
+const SnapshotViewer = ({ locations, metadata, alerts }) => {
     return (
         <div className="snapshot-viewer-container">
             <div className="editor-container">
@@ -44,17 +44,19 @@ const SnapshotViewer = ({ locations, metadata }) => {
                         </List>
                     </Segment>
                 </div>
-                {/* <div className="alerts">
+                {
+                    <div className="alerts">
+                        <h2 style={{ fontWeight: '200' }}>Alerts</h2>
                     <Editor
                         disabled
                         theme="dark"
                         language="json"
-                        value={JSON.stringify(snapshot)}
+                        value={JSON.stringify(alerts)}
                         editorDidMount={(_, editor) => {
                             setTimeout(() => { editor.getAction('editor.action.formatDocument').run() }, 300)
                         }}
                     />
-                </div> */}
+                </div>}
             </div>
         </div>
     );

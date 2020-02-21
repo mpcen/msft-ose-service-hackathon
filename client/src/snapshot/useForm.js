@@ -10,6 +10,7 @@ const useForm = initialState => {
     const [snapshots, setSnapshots] = React.useState(null);
     const [metadata, setMetadata] = React.useState([]);
     const [locations, setLocations] = React.useState([]);
+    const [alerts, setAlerts] = React.useState(null);
     
     const addFilterFormField = () => {
         setFilters(filters => [...filters, { filterId, value: '' }]);
@@ -43,7 +44,7 @@ const useForm = initialState => {
 
     const fetchData = async ({ organization, repository, ...rest }) => {
         const queryKeys = Object.keys(rest);
-        let response, locations = [], metadata = [];
+        let response, locations = [], metadata = [], alerts = null;
         const isProd = process.env.NODE_ENV === 'production' ? true : false;
         try {
             if(queryKeys.length) {
@@ -54,11 +55,14 @@ const useForm = initialState => {
                 response = await axios.get(`${isProd ? "https://cghackathon-server.azurewebsites.net/":""}${organization}/${repository}/snapshots/latest`);
             }
 
+            let alertResponse = await axios.get(`${isProd ? "https://cghackathon-server.azurewebsites.net/":""}${organization}/${repository}/alerts/latest`);
             locations = response.data.locations;
             metadata = response.data.metadata;
+            alerts = alertResponse.data;
 
             setLocations(locations);
             setMetadata(metadata.metadata);
+            setAlerts(alerts);
             setSnapshots(response.data);
             setError(0);
         } catch(e) {
@@ -85,6 +89,7 @@ const useForm = initialState => {
         snapshots,
         locations,
         metadata,
+        alerts,
         error
     }
 }

@@ -1,5 +1,9 @@
 import axios from 'axios';
 import { getSnapshotService } from './SnapshotService';
+export class Tag {
+    key: string;
+    value: string;
+}
 
 export default class AlertService {
     constructor(){
@@ -8,26 +12,62 @@ export default class AlertService {
     public async getAlertFromCDS(org: string, repo: string, snapshotId: number) {
         const snapshotService = await getSnapshotService();
         const snapshot = await snapshotService.getById(org, repo, snapshotId);
+
+        if(snapshot == null || snapshot == undefined){
+            throw new Error("No snapshot with components information");
+        }
         let components = snapshot.locations.map((location: { components: any; }) => location.components);
         let coordinates = components[0].map((x: { coordinates: any; }) => x.coordinates);
         var result = new Array();
 
         for(var coordinate of coordinates){                        
             var data = this.GetRequestData(coordinate);
+            try{
+                const response = await axios({
+                    method: 'post',
+                    url: 'https://cds.cg.microsoft.com/api/searches?$expand=vulnerabilities',
+                    data: data          
+                })
+    
+                var alert = new Alert(coordinate, response.data);
+                result.push(alert);
+            }catch{
 
-            const response = await axios({
-                method: 'post',
-                url: 'https://cds.cg.microsoft.com/api/searches?$expand=vulnerabilities',
-                data: data          
-            })
-
-            var alert = new Alert(coordinate, response.data);
-            result.push(alert);
+            }
         }
 
         return result;
     }
 
+    public async getAlertFromLatest(org: string, repo: string, queries: Tag[]) {
+        const snapshotService = await getSnapshotService();        
+        const snapshot = await snapshotService.GetLatestSnapshotFromQuery(org, repo, queries);
+
+        if(snapshot == null || snapshot == undefined){
+            throw new Error("No snapshot with components information");
+        }
+        let components = snapshot.locations.map((location: { components: any; }) => location.components);
+        let coordinates = components[0].map((x: { coordinates: any; }) => x.coordinates);
+        var result = new Array();
+
+        for(var coordinate of coordinates){                        
+            var data = this.GetRequestData(coordinate);
+            try{
+                const response = await axios({
+                    method: 'post',
+                    url: 'https://cds.cg.microsoft.com/api/searches?$expand=vulnerabilities',
+                    data: data          
+                })
+    
+                var alert = new Alert(coordinate, response.data);
+                result.push(alert);
+            }catch{
+            }
+        }
+
+        return result;
+    }
+    
     public GetRequestData(coordinate: any){
         var componentName = coordinate.name;
         var version = coordinate.version;

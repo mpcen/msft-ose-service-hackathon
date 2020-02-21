@@ -26,7 +26,7 @@ export default class SnapshotService {
     }
 
 
-    public async  GetLatestSnapshotFromQuery(org: string, repo: string, queries: Tag[]): Promise<Snapshot> {
+    public async  GetLatestSnapshotFromQuery(org: string, repo: string, queries: Tag[]) {
         // Given a set of queries, find the latest snapshot that matches all of them.
         console.log(JSON.stringify(queries));
         let snapshotBlob: string;

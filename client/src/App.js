@@ -4,6 +4,7 @@ import { Icon } from 'semantic-ui-react';
 
 import Snapshot from './snapshot/Snapshot';
 import Organization from './organization/Organization';
+import Diff from './diff/Diff';
 
 import './app.css';
 
@@ -23,6 +24,13 @@ const App = () => {
                                     <h4 className="nav-list-item">Snapshot</h4>
                                 </Link>
                             </li>
+
+                            <li style={{ marginRight: '14px', pointer: 'cursor' }}>
+                                <Link to="/diff">
+                                    <h4 className="nav-list-item">Diff</h4>
+                                </Link>
+                            </li>
+
                             <li>
                                 <Link to="/organization">
                                     <h4 className="nav-list-item">Owner</h4>
@@ -36,6 +44,11 @@ const App = () => {
                     <Route exact path="/">
                         <Snapshot />
                     </Route>
+
+                    <Route exact path="/diff">
+                        <Diff />
+                    </Route>
+
                     <Route exact path="/organization">
                         <Organization />
                     </Route>

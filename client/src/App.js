@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 
-import SnapshotForm from './snapshot/SnapshotForm';
+import Snapshot from './snapshot/Snapshot';
 import Organization from './organization/Organization';
 
 const App = () => {
@@ -19,7 +19,7 @@ const App = () => {
 
                 <Switch>
                     <Route exact path="/">
-                        <SnapshotForm />
+                        <Snapshot />
                     </Route>
                     <Route exact path="/organization">
                         <Organization />

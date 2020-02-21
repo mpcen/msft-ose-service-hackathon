@@ -1,0 +1,26 @@
+.snapshot-viewer-container {
+    margin-top: 24px;
+    height: 70%;
+    display: flex;
+}
+
+.editor-container {
+    width: 70%;
+    height: 100%;
+    padding-right: 24px;
+}
+
+.side-container {
+    height: 100%;
+    width: 30%;
+}
+
+/* .metadata {
+    height: 100%;
+    width: 100%;
+} */
+
+.alerts {
+    padding-top: 12px;
+    height: 50%;
+}

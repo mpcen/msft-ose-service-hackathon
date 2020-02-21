@@ -8,6 +8,8 @@ const useForm = initialState => {
     const [isSubmitting, setSubmitting] = React.useState(false);
     const [error, setError] = React.useState(false);
     const [snapshot, setSnapshot] = React.useState(null);
+    const [metadata, setMetadata] = React.useState(null);
+    const [locations, setLocations] = React.useState([]);
     
     const addFilterFormField = () => {
         setFilters(filters => [...filters, { filterId, value: '' }]);
@@ -44,6 +46,10 @@ const useForm = initialState => {
 
         try {
             const response = await axios.get(`${organization}/${repository}/snapshots/1`);
+            const { locations, metadata } = response.data;
+            
+            setLocations(locations);
+            setMetadata(metadata.metadata);
             setSnapshot(response.data);
             setError(false);
         } catch(e) {
@@ -65,6 +71,8 @@ const useForm = initialState => {
         removeFilterFormField,
         isSubmitting,
         snapshot,
+        locations,
+        metadata,
         error
     }
 }

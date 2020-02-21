@@ -7,8 +7,8 @@ const useForm = initialState => {
     const [filters, setFilters] = React.useState([]);
     const [isSubmitting, setSubmitting] = React.useState(false);
     const [error, setError] = React.useState(false);
-    const [snapshot, setSnapshot] = React.useState(null);
-    const [metadata, setMetadata] = React.useState(null);
+    const [snapshots, setSnapshots] = React.useState(null);
+    const [metadata, setMetadata] = React.useState([]);
     const [locations, setLocations] = React.useState([]);
     
     const addFilterFormField = () => {
@@ -37,20 +37,32 @@ const useForm = initialState => {
 
     const handleSubmit = e => {
         e.preventDefault();
+        setSubmitting(true);
         fetchData(values);
     }
 
     const fetchData = async ({ organization, repository, ...rest }) => {
-        setSubmitting(true);
-        console.log(organization, repository, rest);
+        const queryKeys = Object.keys(rest);
+        let response, locations = [], metadata = [];
 
         try {
-            const response = await axios.get(`${organization}/${repository}/snapshots/1`);
-            const { locations, metadata } = response.data;
-            
+            if(queryKeys.length) {
+                const queryString = queryKeys.map(key => `${key}=${rest[key]}`).join('&');
+                
+                response = await axios.get(`${organization}/${repository}/snapshots/latest?${queryString}`);
+                locations = response.data.locations;
+                metadata = response.data.metadata;
+            } else {
+                response = await axios.get(`${organization}/${repository}/snapshots/latest`);
+                response.data.forEach(item => {
+                    locations.push(item.locations);
+                    metadata.push(metadata);
+                });
+            }
+
             setLocations(locations);
             setMetadata(metadata.metadata);
-            setSnapshot(response.data);
+            setSnapshots(response.data);
             setError(false);
         } catch(e) {
             setError(true);
@@ -70,7 +82,7 @@ const useForm = initialState => {
         addFilterFormField,
         removeFilterFormField,
         isSubmitting,
-        snapshot,
+        snapshots,
         locations,
         metadata,
         error

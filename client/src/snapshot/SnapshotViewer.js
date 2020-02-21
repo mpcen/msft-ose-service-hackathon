@@ -4,7 +4,7 @@ import { List } from 'semantic-ui-react';
 
 import './snapshotViewer.css';
 
-const SnapshotViewer = ({ snapshot, locations, metadata }) => {
+const SnapshotViewer = ({ locations, metadata }) => {
     return (
         <div className="snapshot-viewer-container">
             <div className="editor-container">

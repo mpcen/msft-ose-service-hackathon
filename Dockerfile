@@ -11,6 +11,6 @@ RUN npm install
 COPY . .
 COPY ./.prodenv ./.env
 
-EXPOSE 5000 5001
+EXPOSE 5000 3000
 
 CMD [ "npm", "run", "dev" ]

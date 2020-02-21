@@ -2,7 +2,7 @@
 GET http://localhost:5000/owner/reponame/snapshots?top=10&branch=master
 
 ### Get Snapshot By Id
-GET http://localhost:5000/owner/reponame/snapshots/17
+GET http://localhost:5000/owner/reponame/snapshots/1
 
 ### Get Latest snapshot matching tags
 GET http://localhost:5000/owner/reponame/snapshots/latest?tag=workflow"
@@ -46,3 +46,6 @@ content-type: application/json
 
 ###
 GET http://localhost:5000/owner/reponame/alerts/1
+
+###
+GET http://localhost:5000/owner/reponame/alerts/latest

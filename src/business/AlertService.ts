@@ -12,6 +12,10 @@ export default class AlertService {
     public async getAlertFromCDS(org: string, repo: string, snapshotId: number) {
         const snapshotService = await getSnapshotService();
         const snapshot = await snapshotService.getById(org, repo, snapshotId);
+
+        if(snapshot == null || snapshot == undefined){
+            throw new Error("No snapshot with components information");
+        }
         let components = snapshot.locations.map((location: { components: any; }) => location.components);
         let coordinates = components[0].map((x: { coordinates: any; }) => x.coordinates);
         var result = new Array();
@@ -36,9 +40,12 @@ export default class AlertService {
     }
 
     public async getAlertFromLatest(org: string, repo: string, queries: Tag[]) {
-        const snapshotService = await getSnapshotService();
-        
+        const snapshotService = await getSnapshotService();        
         const snapshot = await snapshotService.GetLatestSnapshotFromQuery(org, repo, queries);
+
+        if(snapshot == null || snapshot == undefined){
+            throw new Error("No snapshot with components information");
+        }
         let components = snapshot.locations.map((location: { components: any; }) => location.components);
         let coordinates = components[0].map((x: { coordinates: any; }) => x.coordinates);
         var result = new Array();

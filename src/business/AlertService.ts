@@ -31,8 +31,7 @@ export default class AlertService {
     
                 var alert = new Alert(coordinate, response.data);
                 result.push(alert);
-            }catch{
-
+            }catch(e){
             }
         }
 
@@ -61,7 +60,7 @@ export default class AlertService {
     
                 var alert = new Alert(coordinate, response.data);
                 result.push(alert);
-            }catch{
+            }catch(e){
             }
         }
 

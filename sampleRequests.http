@@ -8,7 +8,7 @@ GET http://localhost:5000/owner/reponame/snapshots/1
 GET http://localhost:5000/owner/reponame/snapshots/latest?tag=workflow"
 
 ### post new snapshot
-POST http://localhost:5000/owner/reponame/snapshots
+POST http://localhost:5000/owner/reponame2/snapshots
 content-type: application/json
 
 {
@@ -39,7 +39,6 @@ content-type: application/json
     ],
     "metadata": {
         "commit": "jgljlgjrgjortgrtop",
-        "branch":"master",
         "release":"1.0.0",
         "tag": "workflow",
         "dateModified": "2020-02-19T01:27:59.532Z"
@@ -48,7 +47,7 @@ content-type: application/json
 
 ###
 
-POST http://localhost:5000/orgname/components
+POST http://localhost:5000/owner/components
 content-type: application/json
 
 {

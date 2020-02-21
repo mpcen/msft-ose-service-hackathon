@@ -110,7 +110,7 @@ export default class SnapshotService {
     public async GetSnapshotsWithIdGreaterThan(snapshotId: number): Promise<ISnapshot[]> {
         let snapshots: Snapshot[] = await getManager()
             .getRepository(Snapshot)
-            .find({ snapshotId: MoreThan(snapshotId) })
+            .find({ where: [{snapshotId: MoreThan(snapshotId)}], relations:["metadata"]})
 
         return Promise.all(snapshots.map(async (snapshot): Promise<ISnapshot> => {
             // var test = await this.getById("orgname", "reponame", snapshot.snapshotId);

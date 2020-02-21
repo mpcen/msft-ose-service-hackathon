@@ -8,6 +8,8 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 
+ENV REACT_APP_IS_PROD true
+
 COPY . .
 COPY ./.prodenv ./.env
 

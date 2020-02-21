@@ -44,14 +44,15 @@ const useForm = initialState => {
     const fetchData = async ({ organization, repository, ...rest }) => {
         const queryKeys = Object.keys(rest);
         let response, locations = [], metadata = [];
-
+        const isProd = process.env.REACT_APP_IS_PROD === 'true' ? true : false;
+        console.log( process.env.REACT_APP_IS_PROD , isProd, process.env)
         try {
             if(queryKeys.length) {
                 const queryString = queryKeys.map(key => `${key}=${rest[key]}`).join('&');
             
-                response = await axios.get(`${organization}/${repository}/snapshots/latest?${queryString}`);
+                response = await axios.get(`${isProd ? "http://cghackathon-server.azurewebsites.net/":""}${organization}/${repository}/snapshots/latest?${queryString}`);
             } else {
-                response = await axios.get(`${organization}/${repository}/snapshots/latest`);
+                response = await axios.get(`${isProd ? "http://cghackathon-server.azurewebsites.net/":""}${organization}/${repository}/snapshots/latest`);
             }
 
             locations = response.data.locations;

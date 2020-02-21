@@ -17,7 +17,7 @@ const Snapshot = () => {
     
     return (
         <div style={{ height: '100%', margin: '24px 20%' }}>
-            <h1 style={{ fontWeight: '200' }}>Repsitory Snapshot</h1>
+            <h1 style={{ fontWeight: '200' }}>Repository Snapshot</h1>
 
             <div className="filter-container">
                 <div className="filtered">

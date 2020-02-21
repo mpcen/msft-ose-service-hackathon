@@ -18,15 +18,18 @@ export default class AlertService {
 
         for(var coordinate of coordinates){                        
             var data = this.GetRequestData(coordinate);
+            try{
+                const response = await axios({
+                    method: 'post',
+                    url: 'https://cds.cg.microsoft.com/api/searches?$expand=vulnerabilities',
+                    data: data          
+                })
+    
+                var alert = new Alert(coordinate, response.data);
+                result.push(alert);
+            }catch{
 
-            const response = await axios({
-                method: 'post',
-                url: 'https://cds.cg.microsoft.com/api/searches?$expand=vulnerabilities',
-                data: data          
-            })
-
-            var alert = new Alert(coordinate, response.data);
-            result.push(alert);
+            }
         }
 
         return result;
@@ -42,15 +45,17 @@ export default class AlertService {
 
         for(var coordinate of coordinates){                        
             var data = this.GetRequestData(coordinate);
-
-            const response = await axios({
-                method: 'post',
-                url: 'https://cds.cg.microsoft.com/api/searches?$expand=vulnerabilities',
-                data: data          
-            })
-
-            var alert = new Alert(coordinate, response.data.vulnerabilities);
-            result.push(alert);
+            try{
+                const response = await axios({
+                    method: 'post',
+                    url: 'https://cds.cg.microsoft.com/api/searches?$expand=vulnerabilities',
+                    data: data          
+                })
+    
+                var alert = new Alert(coordinate, response.data);
+                result.push(alert);
+            }catch{
+            }
         }
 
         return result;

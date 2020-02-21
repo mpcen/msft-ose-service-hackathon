@@ -37,7 +37,8 @@ content-type: application/json
         "key": "workflow",
         "value": "123",
         "dateModified": "2020-02-19T01:27:59.532Z"
-    },
+    }
 }
 
 ###
+GET http://localhost:5000/orgname/reponame/alerts/1

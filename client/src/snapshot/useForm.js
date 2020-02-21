@@ -6,6 +6,8 @@ const useForm = initialState => {
     const [filterId, setFilterId] = React.useState(0);
     const [filters, setFilters] = React.useState([]);
     const [isSubmitting, setSubmitting] = React.useState(false);
+    const [error, setError] = React.useState(false);
+    const [snapshot, setSnapshot] = React.useState(null);
     
     const addFilterFormField = () => {
         setFilters(filters => [...filters, { filterId, value: '' }]);
@@ -33,20 +35,22 @@ const useForm = initialState => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        setSubmitting(true);
         fetchData(values);
     }
 
     const fetchData = async ({ organization, repository, ...rest }) => {
+        setSubmitting(true);
         console.log(organization, repository, rest);
 
-        const response = await axios.get(`${organization}/${repository}/snapshots/12345`);
-
-        console.log(response.data);
+        try {
+            const response = await axios.get(`${organization}/${repository}/snapshots/1`);
+            setSnapshot(response.data);
+            setError(false);
+        } catch(e) {
+            setError(true);
+        }
 
         setSubmitting(false);
-
-        // need to implement the rest of this...
     }
 
     return {
@@ -59,7 +63,9 @@ const useForm = initialState => {
         setFilters,
         addFilterFormField,
         removeFilterFormField,
-        isSubmitting
+        isSubmitting,
+        snapshot,
+        error
     }
 }
 

@@ -6,7 +6,7 @@ import Organization from './organization/Organization';
 
 const App = () => {
     return (
-        <div style={{ padding: '0 20px' }}>
+        <div id="app" style={{ padding: '0 20px', display: 'flex', flexDirection: 'column', height: '100%' }}>
             <Router>
                 <div>
                     <nav>

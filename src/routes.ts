@@ -2,7 +2,7 @@ import { getAllComponents } from './controller/Component/GetAllComponents';
 import { postComponent } from './controller/Component/PostComponent';
 import { getSnapshotById, getSnapshots, getLatestSnapshot } from './controller/Snapshot/GetSnapshots';
 import { postSnapshots } from './controller/Snapshot/PostSnapshots';
-import { getAlerts } from './controller/Alert/GetAlerts';
+import { getAlerts, getAlertsByLatestSnapshot } from './controller/Alert/GetAlerts';
 import { Response, Request } from 'express';
 
 type Route = {
@@ -43,8 +43,13 @@ export const AppRoutes: Route[] = [
         action: postSnapshots
     },
     {
-        path: '/:org/:repo/alerts/:snapshotId',
+        path: '/:org/:repo/alerts/:snapshotId(\\d+)',
         method: 'get',
         action: getAlerts
+    },
+    {
+        path: '/:org/:repo/alerts/latest',
+        method: 'get',
+        action: getAlertsByLatestSnapshot
     },
 ];

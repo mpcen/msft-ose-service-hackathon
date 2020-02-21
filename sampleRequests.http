@@ -5,7 +5,7 @@ GET http://localhost:5000/orgname/reponame/snapshots?top=10&branch=master
 GET http://localhost:5000/orgname/reponame/snapshots/17
 
 ### Get Latest snapshot matching tags
-GET http://localhost:5000/orgname/reponame/snapshots/latest?tag=workflow&branch=master
+GET http://localhost:5000/orgname/reponame/snapshots/latest?tag=workflow"
 
 ### post new snapshot
 POST http://localhost:5000/orgname/reponame/snapshots

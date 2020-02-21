@@ -1,8 +1,14 @@
-GET http://localhost:5000/orgname/reponame/snapshots/12345?commit=usgf873ewfewr&release=qqq&workflow=mmmmm&branch=master&run=98765
+### Get Snapshots with filters
+GET http://localhost:5000/owner/reponame/snapshots?top=10&branch=master
 
-###
+### Get Snapshot By Id
+GET http://localhost:5000/owner/reponame/snapshots/1
 
-POST http://localhost:5000/orgname/reponame/snapshots
+### Get Latest snapshot matching tags
+GET http://localhost:5000/owner/reponame/snapshots/latest?tag=workflow"
+
+### post new snapshot
+POST http://localhost:5000/owner/reponame/snapshots
 content-type: application/json
 
 {
@@ -35,6 +41,7 @@ content-type: application/json
         "commit": "jgljlgjrgjortgrtop",
         "branch":"master",
         "release":"1.0.0",
+        "tag": "workflow",
         "dateModified": "2020-02-19T01:27:59.532Z"
     }
 }
@@ -50,3 +57,7 @@ content-type: application/json
         "version": "4.0.0"
 }
 ###
+GET http://localhost:5000/owner/reponame/alerts/1
+
+###
+GET http://localhost:5000/owner/reponame/alerts/latest

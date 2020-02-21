@@ -1,7 +1,13 @@
-GET http://localhost:5000/orgname/reponame/snapshots/12345?commit=usgf873ewfewr&release=qqq&workflow=mmmmm&branch=master&run=98765
+### Get Snapshots with filters
+GET http://localhost:5000/orgname/reponame/snapshots?top=10&branch=master
 
-###
+### Get Snapshot By Id
+GET http://localhost:5000/orgname/reponame/snapshots/17
 
+### Get Latest snapshot matching tags
+GET http://localhost:5000/orgname/reponame/snapshots/latest?tag=workflow&branch=master
+
+### post new snapshot
 POST http://localhost:5000/orgname/reponame/snapshots
 content-type: application/json
 
@@ -32,11 +38,9 @@ content-type: application/json
         }
     ],
     "metadata": {
-        "commit": "jgljlgjrgjortgrtop",
+        "commit": "jgljlgjrgjortgr2",
         "branch": "master",
-        "key": "workflow",
-        "value": "123",
-        "dateModified": "2020-02-19T01:27:59.532Z"
+        "tag": "workflow"
     }
 }
 

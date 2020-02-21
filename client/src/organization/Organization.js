@@ -2,8 +2,8 @@ import React from 'react';
 
 export default () => {
     return (
-        <div>
-            <h1>Organization</h1>
+        <div style={{ height: '100%', margin: '24px 20%' }}>
+            <h1 style={{ fontWeight: '200' }}>Organization</h1>
         </div>
     );
 }

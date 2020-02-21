@@ -48,23 +48,21 @@ const useForm = initialState => {
         try {
             if(queryKeys.length) {
                 const queryString = queryKeys.map(key => `${key}=${rest[key]}`).join('&');
-                
+            
                 response = await axios.get(`${organization}/${repository}/snapshots/latest?${queryString}`);
-                locations = response.data.locations;
-                metadata = response.data.metadata;
             } else {
                 response = await axios.get(`${organization}/${repository}/snapshots/latest`);
-                response.data.forEach(item => {
-                    locations.push(item.locations);
-                    metadata.push(metadata);
-                });
             }
+
+            locations = response.data.locations;
+            metadata = response.data.metadata;
 
             setLocations(locations);
             setMetadata(metadata.metadata);
             setSnapshots(response.data);
             setError(false);
         } catch(e) {
+            console.log('error:', e)
             setError(true);
         }
 

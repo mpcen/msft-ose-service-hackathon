@@ -13,7 +13,7 @@ const INITIAL_STATE = {
 }
 
 const Snapshot = () => {
-    const { values, handleChange, handleSubmit, filters, setFilters, addFilterFormField, removeFilterFormField, isSubmitting, snapshot, error, locations, metadata } = useForm(INITIAL_STATE);
+    const { values, handleChange, handleSubmit, filters, setFilters, addFilterFormField, removeFilterFormField, isSubmitting, error, locations, metadata } = useForm(INITIAL_STATE);
     
     return (
         <div style={{ height: '100%' }}>
@@ -54,7 +54,7 @@ const Snapshot = () => {
                 error={error}
             />
 
-            {snapshot && <SnapshotViewer locations={locations} metadata={metadata} snapshot={snapshot} />}
+            {locations && locations.length > 0 && metadata && metadata.length > 0 && <SnapshotViewer locations={locations} metadata={metadata} />}
         </div>
     );
 }

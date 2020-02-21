@@ -1,8 +1,9 @@
 import React from 'react';
-import { Button, Form, Icon } from 'semantic-ui-react';
+import { Button, Form, Icon, Label } from 'semantic-ui-react';
 
 import useForm from './useForm';
 import SnapshotFormField from './SnapshotFormField';
+import SnapshotViewer from './SnapshotViewer'
 
 import './snapshotForm.css';
 
@@ -12,10 +13,10 @@ const INITIAL_STATE = {
 }
 
 const SnapshotForm = () => {
-    const { values, handleChange, handleSubmit, filters, setFilters, addFilterFormField, removeFilterFormField, isSubmitting } = useForm(INITIAL_STATE);
+    const { values, handleChange, handleSubmit, filters, setFilters, addFilterFormField, removeFilterFormField, isSubmitting, snapshot, error } = useForm(INITIAL_STATE);
     
     return (
-        <div>
+        <div style={{ height: '100%' }}>
             <h1>Snapshot</h1>
 
             <div className="filter-container">
@@ -86,7 +87,20 @@ const SnapshotForm = () => {
                 >
                     Submit
                 </Button>
+
+                {
+                    error &&
+                    <Label basic pointing="left" color="red">
+                        Something went wrong
+                    </Label>
+                }
             </Form>
+
+            
+            {
+                snapshot &&
+                <SnapshotViewer snapshot={snapshot} />
+            }
         </div>
     );
 }

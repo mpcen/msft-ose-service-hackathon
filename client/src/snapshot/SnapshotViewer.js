@@ -37,7 +37,7 @@ const SnapshotViewer = ({ locations, metadata }) => {
                     <Segment inverted>
                         <List divided inverted relaxed>
                             {makeListItem("Repository",metadata[0].repo,0)}
-                            {makeListItem("Organization",metadata[0].org,1)}
+                            {makeListItem("Owner",metadata[0].org,1)}
                             {metadata.map(({ key, value }, index) =>  (makeListItem(key,value,index+2)))}
                         </List>
                     </Segment>

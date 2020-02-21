@@ -16,8 +16,8 @@ const Snapshot = () => {
     const { values, handleChange, handleSubmit, filters, setFilters, addFilterFormField, removeFilterFormField, isSubmitting, error, locations, metadata } = useForm(INITIAL_STATE);
     
     return (
-        <div style={{ height: '100%' }}>
-            <h1>Snapshot</h1>
+        <div style={{ height: '100%', margin: '24px 20%' }}>
+            <h1 style={{ fontWeight: '200' }}>Repsitory Snapshot</h1>
 
             <div className="filter-container">
                 <div className="filtered">

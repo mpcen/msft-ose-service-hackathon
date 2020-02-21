@@ -62,6 +62,7 @@ const useForm = initialState => {
             setSnapshots(response.data);
             setError(false);
         } catch(e) {
+            console.log('error:', e)
             setError(true);
         }
 

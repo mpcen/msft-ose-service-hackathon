@@ -1,6 +1,6 @@
 import React from 'react';
 import Editor from '@monaco-editor/react';
-import { List } from 'semantic-ui-react';
+import { List, Segment } from 'semantic-ui-react';
 
 import './snapshotViewer.css';
 
@@ -8,9 +8,9 @@ const SnapshotViewer = ({ locations, metadata }) => {
     return (
         <div className="snapshot-viewer-container">
             <div className="editor-container">
-                <h2>Locations</h2>
+                <h2 style={{ fontWeight: '200' }}>Locations</h2>
                 <Editor
-                    theme="light"
+                    theme="dark"
                     language="json"
                     value={JSON.stringify(locations)}
                     options={{
@@ -24,7 +24,7 @@ const SnapshotViewer = ({ locations, metadata }) => {
 
             <div className="side-container">
                 <div className="metadata">
-                    <h2>Metadata</h2>
+                    <h2 style={{ fontWeight: '200' }}>Metadata</h2>
                     {/* <Editor
                         disabled
                         theme="dark"
@@ -34,16 +34,18 @@ const SnapshotViewer = ({ locations, metadata }) => {
                             setTimeout(() => { editor.getAction('editor.action.formatDocument').run() }, 300)
                         }}
                     /> */}
-                    <List celled>
-                        {metadata.map(({ key, value }) => (
-                            <List.Item>
-                                <List.Content>
-                                    <List.Header>{key}</List.Header>
-                                    {value}
-                                </List.Content>
-                            </List.Item>
-                        ))}
-                    </List>
+                    <Segment inverted>
+                        <List divided inverted relaxed>
+                            {metadata.map(({ key, value }, index) => (
+                                <List.Item key={`${key}:${index}`}>
+                                    <List.Content>
+                                        <List.Header>{key}</List.Header>
+                                        {value}
+                                    </List.Content>
+                                </List.Item>
+                            ))}
+                        </List>
+                    </Segment>
                 </div>
 
                 {/* <div className="alerts">

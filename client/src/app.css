@@ -1,0 +1,8 @@
+.nav-list-item {
+    color: white;
+}
+
+.nav-list-item:hover {
+    cursor: pointer;
+    color: lightgray;
+}

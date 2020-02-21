@@ -33,11 +33,20 @@ content-type: application/json
     ],
     "metadata": {
         "commit": "jgljlgjrgjortgrtop",
-        "branch": "master",
-        "key": "workflow",
-        "value": "123",
+        "branch":"master",
+        "release":"1.0.0",
         "dateModified": "2020-02-19T01:27:59.532Z"
-    },
+    }
 }
 
+###
+
+POST http://localhost:5000/orgname/components
+content-type: application/json
+
+{
+        "type": "npm",
+        "name": "express",
+        "version": "4.0.0"
+}
 ###

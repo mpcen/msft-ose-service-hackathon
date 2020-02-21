@@ -36,7 +36,18 @@ export class JobService {
   private getProjectionFromSnapshots(snapshots: ISnapshot[]): SnapshotBranchProjection[]{
     var snapshotBranchProjection: SnapshotBranchProjection[] = [];
     snapshots.forEach(snapshot => {
+    if (snapshot.metadata == null || snapshot.metadata.metadata == null)
+      {
+        console.log("the snapshot model does not have snapshot or snapshot metadata")
+        return ;
+      }
+      
       var branch = this.getSnapshotBranch(snapshot)
+      if(branch == null)
+      {
+        return;
+      }
+
       snapshot.locations.forEach(location => { 
         location.components.forEach(component =>{
           let branchProjection = new SnapshotBranchProjection();
@@ -57,7 +68,13 @@ export class JobService {
 
   private getSnapshotBranch(snapshot: ISnapshot): string
   {
-    return snapshot.metadata.metadata.find(metadata => metadata.key == "branch").value;
+    var tagBranch =  snapshot.metadata.metadata.find(metadata => metadata.key == "branch");
+    if(tagBranch == null)
+    {
+      return null;
+    }
+
+    return tagBranch.value;
   }
 
   private async saveProjections(projections: SnapshotBranchProjection[]): Promise<void> {

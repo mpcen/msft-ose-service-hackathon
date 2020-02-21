@@ -28,7 +28,6 @@ export default class SnapshotService {
 
   public async  GetLatestSnapshotFromQuery(org: string, repo: string, queries: Tag[])  {
     // Given a set of queries, find the latest snapshot that matches all of them.
-        let test = await getManager();
         const latestSnapshot = await getManager()
             .getRepository(Snapshot).createQueryBuilder("s")
             .innerJoin(qb => { 
@@ -44,13 +43,13 @@ export default class SnapshotService {
             .orderBy("snapshotId","DESC")
             .getRawOne();
         console.log(latestSnapshot);
-        return latestSnapshot           
+        return latestSnapshot
     }
 
   public async GetSnapshotsWithIdGreaterThan(snapshotId: number): Promise<ISnapshot[]> {
       let snapshots: Snapshot[] = await getManager()
       .getRepository(Snapshot)
-      .find({snapshotId: MoreThan(snapshotId)})
+      .find({where:[{snapshotId: MoreThan(snapshotId)}], relations:["metadata"]})
 
       return Promise.all(snapshots.map( async (snapshot): Promise<ISnapshot> => {
         var test = await this.getById("orgname","reponame",snapshot.snapshotId);

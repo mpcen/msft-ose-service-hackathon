@@ -3,6 +3,7 @@ import { postComponent } from './controller/Component/PostComponent';
 import { getSnapshots } from './controller/Snapshot/GetSnapshots';
 import { postSnapshots } from './controller/Snapshot/PostSnapshots';
 import { getAlerts } from './controller/Alert/GetAlerts';
+import { getUseOfComponentInOrg } from './controller/Component/GetUseOfComponentInOrg';
 import { Response, Request } from 'express';
 
 type Route = {
@@ -37,4 +38,9 @@ export const AppRoutes: Route[] = [
         method: 'get',
         action: getAlerts
     },
+    {
+        path: '/:org/components',
+        method: 'post',
+        action: getUseOfComponentInOrg
+    }
 ];

@@ -1,17 +1,20 @@
-import { Entity, Column, PrimaryColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class SnapshotBranchProjection {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
+    projectionId: number;
+
+    @Column()
     OrganizationId: string;
     
-    @PrimaryColumn()
+    @Column()
     RepositoryId: string;
 
-    @PrimaryColumn()
+    @Column()
     SnapshotId: number;
 
-    @PrimaryColumn()
+    @Column()
     Branch: string;
 
     @Column()

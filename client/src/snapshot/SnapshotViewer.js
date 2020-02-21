@@ -17,7 +17,9 @@ const SnapshotViewer = ({ locations, metadata }) => {
                         minimap: { enabled: false }
                     }}
                     editorDidMount={(_, editor) => {
-                        setTimeout(() => { editor.getAction('editor.action.formatDocument').run() }, 300)
+                        setTimeout(() => {
+                            editor.getAction('editor.action.formatDocument').run()
+                        }, locations && locations.length > 5 ? 600 : 300)
                     }}
                 />
             </div>

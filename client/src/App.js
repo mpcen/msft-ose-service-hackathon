@@ -25,7 +25,7 @@ const App = () => {
                             </li>
                             <li>
                                 <Link to="/organization">
-                                    <h4 className="nav-list-item">Organization</h4>
+                                    <h4 className="nav-list-item">Owner</h4>
                                 </Link>
                             </li>
                         </ul>

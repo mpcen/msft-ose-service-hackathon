@@ -46,7 +46,7 @@ export default class SnapshotService {
                 .having("matches = :queries", { queries: queries.length })
                 .orderBy("metadata.snapshotId", "DESC")
                 .limit(1);
-                
+
             const latestSnapshotBlob =
                 await getManager().createQueryBuilder()
                     .from((qb) => { return qb.subQuery().from("(" + latestMatchingSnapshotId.getQuery() + ")", "m2").select("SnapshotId", "snapshotId") }, "m")
@@ -113,7 +113,7 @@ export default class SnapshotService {
             .find({ snapshotId: MoreThan(snapshotId) })
 
         return Promise.all(snapshots.map(async (snapshot): Promise<ISnapshot> => {
-            var test = await this.getById("orgname", "reponame", snapshot.snapshotId);
+            // var test = await this.getById("orgname", "reponame", snapshot.snapshotId);
             const blockBlobClient = this.containerClient.getBlockBlobClient(`${snapshot.blobId}.json`);
             var downloadBlockResponse = await blockBlobClient.download(0);
             var snapshotModel = JSON.parse(await this.streamToString(downloadBlockResponse.readableStreamBody));

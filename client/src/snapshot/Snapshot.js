@@ -8,13 +8,13 @@ import SnapshotForm from './SnapshotForm';
 import './snapshot.css';
 
 const INITIAL_STATE = {
-    organization: 'orgname',
+    organization: 'owner',
     repository: 'reponame'
 }
 
 const Snapshot = () => {
     const { values, handleChange, handleSubmit, filters, setFilters, addFilterFormField, removeFilterFormField, isSubmitting, error, locations, metadata } = useForm(INITIAL_STATE);
-    
+
     return (
         <div style={{ height: '100%', margin: '24px 20%' }}>
             <h1 style={{ fontWeight: '200' }}>Repository Snapshot</h1>

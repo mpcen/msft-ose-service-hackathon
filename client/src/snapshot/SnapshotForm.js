@@ -7,11 +7,11 @@ const SnapshotForm = ({ values, handleChange, handleSubmit, setFilters, filters,
     return (
         <Form className="snapshot-form" onSubmit={handleSubmit}>
             <Form.Field required>
-                <label>Organization</label>
+                <label>Owner</label>
                 <input
                     required
                     name="organization"
-                    placeholder='Organization'
+                    placeholder='Owner'
                     value={values.organization}
                     onChange={handleChange}
                 />

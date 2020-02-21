@@ -1,14 +1,14 @@
 ### Get Snapshots with filters
-GET http://localhost:5000/orgname/reponame/snapshots?top=10&branch=master
+GET http://localhost:5000/owner/reponame/snapshots?top=10&branch=master
 
 ### Get Snapshot By Id
-GET http://localhost:5000/orgname/reponame/snapshots/17
+GET http://localhost:5000/owner/reponame/snapshots/17
 
 ### Get Latest snapshot matching tags
-GET http://localhost:5000/orgname/reponame/snapshots/latest?tag=workflow"
+GET http://localhost:5000/owner/reponame/snapshots/latest?tag=workflow"
 
 ### post new snapshot
-POST http://localhost:5000/orgname/reponame/snapshots
+POST http://localhost:5000/owner/reponame/snapshots
 content-type: application/json
 
 {
@@ -45,4 +45,4 @@ content-type: application/json
 }
 
 ###
-GET http://localhost:5000/orgname/reponame/alerts/1
+GET http://localhost:5000/owner/reponame/alerts/1

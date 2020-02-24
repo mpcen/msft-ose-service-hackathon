@@ -12,14 +12,25 @@ const DiffViewer = ({ locationsLHS, metadataLHS, locationsRHS, metadataRHS }) =>
                 <DiffEditor
                     theme="dark"
                     language="json"
-                    options={{
-                        minimap: { enabled: false }
-                    }}
+                    options={
+                        {
+                            minimap: { enabled: false },
+                            inDiffEditor: true,
+                            formatOnPaste: true,
+                            formatOnType: true,
+                            originalEditable: true
+                        }
+                    }
                     original={JSON.stringify(locationsLHS[0])}
                     modified={JSON.stringify(locationsRHS[0])}
+                    editorDidMount={async (originalEditorValue, modifiedEditorValue, editor) => {
+                        setTimeout(() => {
+                            editor.getOriginalEditor().getAction('editor.action.formatDocument').run();
+                            editor.getModifiedEditor().getAction('editor.action.formatDocument').run();
+                        }, locationsLHS && locationsRHS && locationsLHS.length > 5 ? 600 : 300)
+                    }}
                 />
             </div>
-
         </div>
     );
 }

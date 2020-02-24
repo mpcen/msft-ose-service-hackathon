@@ -36,7 +36,7 @@ const options = [
     },
 ]
 
-const SnapshotFormField = ({ filter, setFilters, currentFilters, removeFilterFormField, values, handleChange }) => {
+const SnapshotFormField = ({ isDiff, filter, setFilters, currentFilters, removeFilterFormField, values, handleChange }) => {
     return (
         <Form.Field>
             <div className="form-field-container">
@@ -54,17 +54,41 @@ const SnapshotFormField = ({ filter, setFilters, currentFilters, removeFilterFor
                     />
                 </div>
 
-                <input
-                    required
-                    className="form-input"
-                    name={filter.value.toLowerCase()}
-                    value={values[filter.value.toLowerCase()] || ''}
-                    onChange={handleChange}
-                />
+                {
+                    isDiff ? (
+                        <>
+                            <input
+                                required
+                                className="form-input"
+                                name="lhs"
+                                value={values.lhs || ''}
+                                onChange={handleChange}
+                            />
+                            <input
+                                required
+                                className="form-input"
+                                name="rhs"
+                                value={values.rhs || ''}
+                                onChange={handleChange}
+                            />
+                        </>
+                    ) :
+                    (
+                        <input
+                            required
+                            className="form-input"
+                            name={filter.value.toLowerCase()}
+                            value={values[filter.value.toLowerCase()] || ''}
+                            onChange={handleChange}
+                        />
+                    )
+                }
 
-                <div onClick={() => removeFilterFormField(filter.value)}>
+                {!isDiff &&
+                    <div onClick={() => removeFilterFormField(filter.value)}>
                     <Icon color="red" size="large" name="close" />
                 </div>
+                }
             </div>
         </Form.Field>
     );

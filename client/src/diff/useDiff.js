@@ -72,12 +72,11 @@ const useForm = initialState => {
             metadataRHS = responses[1].data.metadata;
 
             console.log('responses:', responses);
-
             setLocationsLHS(locationsLHS);
             setMetadataLHS(metadataLHS.metadata);
             setLocationsRHS(locationsRHS);
             setMetadataRHS(metadataRHS.metadata);
-            setSnapshots(responses.data);
+            setSnapshots(responses[0].data);
 
             setError(0);
         } catch(e) {

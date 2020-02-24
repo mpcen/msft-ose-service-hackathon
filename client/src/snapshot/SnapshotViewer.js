@@ -27,15 +27,6 @@ const SnapshotViewer = ({ locations, metadata, alerts }) => {
             <div className="side-container">
                 <div className="metadata">
                     <h2 style={{ fontWeight: '200' }}>Metadata</h2>
-                    {/* <Editor
-                        disabled
-                        theme="dark"
-                        language="json"
-                        value={JSON.stringify(snapshot)}
-                        editorDidMount={(_, editor) => {
-                            setTimeout(() => { editor.getAction('editor.action.formatDocument').run() }, 300)
-                        }}
-                    /> */}
                     <Segment inverted>
                         <List divided inverted relaxed>
                             {makeListItem("Repository",metadata[0].repo,0)}
@@ -48,12 +39,16 @@ const SnapshotViewer = ({ locations, metadata, alerts }) => {
                     <div className="alerts">
                         <h2 style={{ fontWeight: '200' }}>Alerts</h2>
                     <Editor
-                        disabled
+                        automaticLayout
                         theme="dark"
                         language="json"
                         value={JSON.stringify(alerts)}
                         editorDidMount={(_, editor) => {
                             setTimeout(() => { editor.getAction('editor.action.formatDocument').run() }, 300)
+                        }}
+                        options={{
+                            formatOnPaste: true,
+                            formatOnType: true
                         }}
                     />
                 </div>}

@@ -19,7 +19,7 @@ const SnapshotViewer = ({ locations, metadata, alerts }) => {
                     editorDidMount={(_, editor) => {
                         setTimeout(() => {
                             editor.getAction('editor.action.formatDocument').run()
-                        }, locations && locations.length > 5 ? 600 : 300)
+                        }, locations && locations.length > 5 ? 700 : 400)
                     }}
                 />
             </div>
@@ -38,20 +38,11 @@ const SnapshotViewer = ({ locations, metadata, alerts }) => {
                 {
                     <div className="alerts">
                         <h2 style={{ fontWeight: '200' }}>Alerts</h2>
-                    <Editor
-                        automaticLayout
-                        theme="dark"
-                        language="json"
-                        value={JSON.stringify(alerts)}
-                        editorDidMount={(_, editor) => {
-                            setTimeout(() => { editor.getAction('editor.action.formatDocument').run() }, 300)
-                        }}
-                        options={{
-                            formatOnPaste: true,
-                            formatOnType: true
-                        }}
-                    />
-                </div>}
+                        {
+                            alerts && alerts.map(a => makeAlertItem(a))
+                        }
+                    </div>
+                }
             </div>
         </div>
     );
@@ -64,6 +55,14 @@ function makeListItem(header, value, index){
         {value}
     </List.Content>
 </List.Item>
+}
+
+function makeAlertItem(alert) {
+    return <div style={{fontSize: '18px', margin: '30px 0'}}>
+        <a style={{fontWeight: 'bold', margin: '5px 0'}} href={alert.vulnerabilities.vulnerabilities.summary[0].url}>{alert.vulnerabilities.vulnerabilities.summary[0].title}</a>
+        <div >{alert.coordinate.type + " " + alert.coordinate.name + "@" + alert.coordinate.version}</div>
+        <div style={{fontSize: '14px', margin: '15px 0'}}>{alert.vulnerabilities.vulnerabilities.summary[0].remediation}</div>
+    </div>
 }
 
 export default SnapshotViewer;

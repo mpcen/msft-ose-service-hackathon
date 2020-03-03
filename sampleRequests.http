@@ -8,7 +8,7 @@ GET http://localhost:5000/owner/reponame/snapshots/1
 GET http://localhost:5000/owner/reponame/snapshots/latest?tag=workflow"
 
 ### post new snapshot
-POST http://localhost:5000/owner/reponame2/snapshots
+POST http://localhost:5000/owner/reponame/snapshots
 content-type: application/json
 
 {
@@ -20,7 +20,7 @@ content-type: application/json
                     "coordinates": {
                         "type": "npm",
                         "name": "express",
-                        "version": "4.0.0"
+                        "version": "4.0.1"
                     },
                     "usage": {
                         "devDependency": false
@@ -29,7 +29,7 @@ content-type: application/json
                         "coordinates": {
                             "type": "npm",
                             "name": "ajv",
-                            "version": "6.11.0"
+                            "version": "6.11.1"
                         }
                     }],
                     "directDependency": true
@@ -38,8 +38,9 @@ content-type: application/json
         }
     ],
     "metadata": {
-        "commit": "jgljlgjrgjortgrtop",
-        "release":"1.0.0",
+        "commit": "3",
+        "branch": "develop",
+        "release":"2.0.0",
         "tag": "workflow",
         "dateModified": "2020-02-19T01:27:59.532Z"
     }

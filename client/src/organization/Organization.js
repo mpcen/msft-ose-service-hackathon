@@ -1,14 +1,16 @@
 import React from 'react';
-import { Form, Button, Label } from 'semantic-ui-react';
+import { Form, Button } from 'semantic-ui-react';
 import Editor from '@monaco-editor/react';
 
 import useForm from './useForm';
 
+import './organization.css';
+
 const INITIAL_STATE = {
     owner: 'owner',
     type: 'npm',
-    name: 'react',
-    version: '12.0.1'
+    name: 'express',
+    version: '4.0.0'
 }
 
 export default () => {
@@ -31,8 +33,8 @@ export default () => {
                     <label>Type</label>
                     <input
                         required
-                        name="owner"
-                        placeholder='npm'
+                        name="type"
+                        placeholder='type'
                         value={values.type}
                         onChange={handleChange}
                     />
@@ -42,7 +44,7 @@ export default () => {
                     <input
                         required
                         name="name"
-                        placeholder='react'
+                        placeholder='name'
                         value={values.name}
                         onChange={handleChange}
                     />
@@ -51,8 +53,8 @@ export default () => {
                     <label>Version</label>
                     <input
                         required
-                        name="owner"
-                        placeholder='12.0.1'
+                        name="version"
+                        placeholder='version'
                         value={values.version}
                         onChange={handleChange}
                     />
@@ -66,20 +68,27 @@ export default () => {
                 </Button>
             </Form>
             {
-                data && data.length > 0 &&
-                <Editor
-                        theme="dark"
-                        language="json"
-                        value={JSON.stringify(data)}
-                        options={{
-                            minimap: { enabled: false }
-                        }}
-                        editorDidMount={(_, editor) => {
-                            setTimeout(() => {
-                                editor.getAction('editor.action.formatDocument').run()
-                            }, data && data.length > 5 ? 600 : 300)
-                        }}
-                    />
+                data &&
+                <div className="organization-data-viewer">
+                    { 
+                        data.length > 0 ?
+                        <Editor
+                            theme="dark"
+                            language="json"
+                            value={JSON.stringify(data)}
+                            options={{
+                                minimap: { enabled: false }
+                            }}
+                            editorDidMount={(_, editor) => {
+                                setTimeout(() => {
+                                    editor.getAction('editor.action.formatDocument').run()
+                                }, data && data.length > 5 ? 600 : 300)
+                            }}
+                        />
+                        :
+                        <span>No branches or releases found.</span>
+                    }
+                </div>
             }
         </div>
     );

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const useForm = initialState => {
     const [values, setValues] = React.useState(initialState);
-    const [data, setData] = React.useState([]);
+    const [data, setData] = React.useState(null);
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -26,13 +26,14 @@ const useForm = initialState => {
             version: version
         });
 
-        setData(response);
+        setData(response.data);
     }
 
     return {
         handleChange,
         handleSubmit,
-        values
+        values,
+        data
     }
 }
 

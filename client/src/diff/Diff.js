@@ -8,7 +8,7 @@ import DiffViewer from './DiffViewer';
 import './diff.css';
 
 const INITIAL_STATE = {
-    organization: 'orgname',
+    organization: 'owner',
     repository: 'reponame',
     lhs: '',
     rhs: ''

@@ -21,8 +21,8 @@ const DiffViewer = ({ locationsLHS, metadataLHS, locationsRHS, metadataRHS }) =>
                             originalEditable: true
                         }
                     }
-                    original={JSON.stringify(locationsLHS[0])}
-                    modified={JSON.stringify(locationsRHS[0])}
+                    original={JSON.stringify(locationsLHS)}
+                    modified={JSON.stringify(locationsRHS)}
                     editorDidMount={async (originalEditorValue, modifiedEditorValue, editor) => {
                         setTimeout(() => {
                             editor.getOriginalEditor().getAction('editor.action.formatDocument').run();

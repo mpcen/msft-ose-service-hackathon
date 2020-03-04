@@ -44,18 +44,19 @@ const useForm = initialState => {
 
     const fetchData = async ({ organization, repository, ...rest }) => {
         const queryKeys = Object.keys(rest);
-        let response, locations = [], metadata = [], alerts = null;
+        let response, alertResponse, locations = [], metadata = [], alerts = null;
         const isProd = process.env.NODE_ENV === 'production' ? true : false;
         try {
             if(queryKeys.length) {
                 const queryString = queryKeys.map(key => `${key}=${rest[key]}`).join('&');
             
                 response = await axios.get(`${isProd ? "https://cghackathon-server.azurewebsites.net/":""}${organization}/${repository}/snapshots/latest?${queryString}`);
+                alertResponse = await axios.get(`${isProd ? "https://cghackathon-server.azurewebsites.net/":""}${organization}/${repository}/alerts/latest?${queryString}`);
             } else {
                 response = await axios.get(`${isProd ? "https://cghackathon-server.azurewebsites.net/":""}${organization}/${repository}/snapshots/latest`);
+                alertResponse = await axios.get(`${isProd ? "https://cghackathon-server.azurewebsites.net/":""}${organization}/${repository}/alerts/latest`);
             }
 
-            let alertResponse = await axios.get(`${isProd ? "https://cghackathon-server.azurewebsites.net/":""}${organization}/${repository}/alerts/latest`);
             locations = response.data.locations;
             metadata = response.data.metadata;
             alerts = alertResponse.data;
